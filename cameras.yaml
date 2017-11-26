@@ -1,0 +1,4 @@
+  - platform: generic
+    name: Weather Radar
+    still_image_url: https://icons.wxug.com/data/weather-maps/radar/united-states/staunton-virginia-region-current-radar-animation.gif
+

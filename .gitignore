@@ -1,0 +1,7 @@
+secrets.yaml
+*.db
+*.log
+*.conf
+.spotify-token-cache
+.uuid
+.HA_VERSION

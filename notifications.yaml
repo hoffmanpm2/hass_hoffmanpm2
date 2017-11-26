@@ -1,0 +1,7 @@
+  - name: MMS Message
+    platform: smtp
+    sender: !secret smtp_sender
+    recipient: !secret smtp_recipients
+    server: smtp.gmail.com
+    username: !secret smtp_username
+    password: !secret smtp_password
