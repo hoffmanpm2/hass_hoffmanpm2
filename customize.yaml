@@ -106,6 +106,14 @@
     friendly_name: Temperature
     icon: mdi:thermometer
 
+  sensor.sunrise:
+    friendly_name: Sunrise
+    icon: mdi:weather-sunset-up
+
+  sensor.sunset:
+    friendly_name: Sunset
+    icon: mdi:weather-sunset-down
+
   sensor.upstairs_thermostat_humidity:
     friendly_name: Humidity
     icon: mdi:water-percent

@@ -22,6 +22,8 @@
       - sensor.dark_sky_daily_low_temperature
       - sensor.dark_sky_precip_probability
       - sensor.dark_sky_daily_max_precip_intensity
+      - sensor.sunrise
+      - sensor.sunset
       - sensor.dark_sky_daily_summary
 
   hvac_downstairs:
