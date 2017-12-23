@@ -110,31 +110,27 @@
 #      service: vacuum.turn_on
 #      entity_id: vacuum.upstairs_botvac
 
-  - alias: 'Turn off water heater while away (after away for 30 minutes)'
+  - alias: 'Activate Away Mode (away for 20-30 minutes)'
     trigger:
       - platform: state
         entity_id: device_tracker.philip
         from: 'home'
         to: 'not_home'
         for:
-          minutes: 30
+          minutes: 20
     action:
-      service: climate.set_operation_mode
-      data:
-        entity_id: climate.electric_water_heater
-        operation_mode: 'off'
+      service: script.turn_on
+      entity_id: script.activate_away_mode
 
-  - alias: 'Turn on water heater when returning'
+  - alias: 'Deactivate Away Mode'
     trigger:
       - platform: state
         entity_id: device_tracker.philip
         from: 'not_home'
         to: 'home'
     action:
-      service: climate.set_operation_mode
-      data:
-        entity_id: climate.electric_water_heater
-        operation_mode: 'eco'
+      service: script.turn_on
+      entity_id: script.deactivate_away_mode
 
   - alias: 'Turn off water heater at bedtime'
     trigger:

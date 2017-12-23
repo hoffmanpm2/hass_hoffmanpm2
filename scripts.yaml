@@ -62,3 +62,29 @@
           media_content_id: 'https://static1.squarespace.com/static/542f4b8ae4b0fe7f8b6c08c5/5a368f0e24a6949ae3f0542d/5a3690cd24a6949ae3f08199/1513525484069/IOS+10+-+Early+Riser+Alarm+%28Enhanced++Extended+Edition%29.mp3'
           media_content_type: 'MUSIC'
 
+  activate_away_mode:
+    alias: Activate Away Mode
+    sequence:
+      - alias: Activate Away Mode for Nest Thermostats
+        service: nest.set_mode
+        data:
+          home_mode: 'away'
+      - alias: Deactivate Water Heater
+        service: climate.set_operation_mode
+        data:
+          entity_id: climate.electric_water_heater
+          operation_mode: 'off'
+
+  deactivate_away_mode:
+    alias: Deactivate Away Mode
+    sequence:
+      - alias: Deactivate Away Mode for Nest Thermostats
+        service: nest.set_mode
+        data:
+          home_mode: 'home'
+      - alias: Activate Water Heater
+        service: climate.set_operation_mode
+        data:
+          entity_id: climate.electric_water_heater
+          operation_mode: 'eco'
+
