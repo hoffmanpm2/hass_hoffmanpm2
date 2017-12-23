@@ -131,7 +131,9 @@ http:
   # Secrets are defined in the file secrets.yaml
   api_password: !secret http_password
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-  # base_url: example.duckdns.org:8123
+  base_url: home.hoffmanpm2.com:443
+  ssl_certificate: '/etc/letsencrypt/live/home.hoffmanpm2.com/fullchain.pem'
+  ssl_key: '/etc/letsencrypt/live/home.hoffmanpm2.com/privkey.pem'
 
 # Checks for available updates
 # Note: This component will send some information about your system to
