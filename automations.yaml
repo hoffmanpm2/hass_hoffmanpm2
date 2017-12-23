@@ -1,1 +1,165 @@
-[]
+# Receive an alert when there is snow, ice, sleet, or freezing rain in the forecast.
+# Receive an alert at sunrise when there is a significant chance of rain in the forecast.
+# Receive an alert when a watch/warning is issued. There should be a way to indicate severity.
+# Good night (shut off lights, lock doors)
+# Turn on lights and unlock doors in the event of an emergency.
+
+  - alias: 'Turn on walkway lights at sunset'
+    trigger:
+      - platform: sun
+        event: sunset
+    condition:
+      - condition: time
+        before: '23:00:00'
+    action:
+      service: script.turn_on
+      entity_id: script.activate_outdoor_lights
+
+  - alias: 'Turn off walkway lights at 11pm'
+    trigger:
+      - platform: time
+        at: '23:00:00'
+    condition:
+      condition: state
+      entity_id: binary_sensor.workday_tomorrow
+      state: 'on'
+    action:
+      service: script.turn_on
+      entity_id: script.deactivate_outdoor_lights
+
+  - alias: 'Turn off walkway lights at midnight'
+    trigger:
+      - platform: time
+        at: '00:00:00'
+    condition:
+      condition: state
+      entity_id: script.activate_outdoor_lights
+      state: 'on'
+    action:
+      service: script.turn_on
+      entity_id: script.deactivate_outdoor_lights
+
+  - alias: 'Workday Alarm Clock'
+    trigger:
+      platform: template
+      value_template: '{{ states.sensor.time.state == states.sensor.alarm_clock_time.state }}'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.alarm_clock_status
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.workday
+          state: 'on'
+        - condition: state
+          entity_id: calendar.day_off
+          state: 'off'
+        - condition: state
+          entity_id: device_tracker.philip
+          state: 'home'
+    action:
+      service: script.turn_on
+      entity_id: script.activate_alarm_clock
+
+#  - alias: 'Vacuum Downstairs'
+#    trigger:
+#      - platform: time
+#        at: '11:00:00'
+#    condition:
+#      condition: and
+#      conditions:
+#        - condition: state
+#          entity_id: binary_sensor.workday
+#          state: 'on'
+#        - condition: time
+#          weekday:
+#            - tue
+#            - fri
+#        - condition: state
+#          entity_id: calendar.day_off
+#          state: 'off'
+#        - condition: state
+#          entity_id: device_tracker.philip
+#          state: 'home'
+#    action:
+#      service: vacuum.turn_on
+#      entity_id: vacuum.downstairs_botvac
+
+#  - alias: 'Vacuum Upstairs'
+#    trigger:
+#      - platform: time
+#        at: '11:00:00'
+#    condition:
+#      condition: and
+#      conditions:
+#        - condition: state
+#          entity_id: binary_sensor.workday
+#          state: 'on'
+#        - condition: time
+#          weekday:
+#            - tue
+#            - fri
+#        - condition: state
+#          entity_id: calendar.day_off
+#          state: 'off'
+#        - condition: state
+#          entity_id: device_tracker.philip
+#          state: 'home'
+#    action:
+#      service: vacuum.turn_on
+#      entity_id: vacuum.upstairs_botvac
+
+  - alias: 'Turn off water heater while away (after away for 30 minutes)'
+    trigger:
+      - platform: state
+        entity_id: device_tracker.philip
+        from: 'home'
+        to: 'not_home'
+        for:
+          minutes: 30
+    action:
+      service: climate.set_operation_mode
+      data:
+        entity_id: climate.electric_water_heater
+        operation_mode: 'off'
+
+  - alias: 'Turn on water heater when returning'
+    trigger:
+      - platform: state
+        entity_id: device_tracker.philip
+        from: 'not_home'
+        to: 'home'
+    action:
+      service: climate.set_operation_mode
+      data:
+        entity_id: climate.electric_water_heater
+        operation_mode: 'eco'
+
+  - alias: 'Turn off water heater at bedtime'
+    trigger:
+      - platform: time
+        at: '00:00:00'
+    condition:
+      - condition: state
+        entity_id: device_tracker.philip
+        state: 'home'
+    action:
+      service: climate.set_operation_mode
+      data:
+        entity_id: climate.electric_water_heater
+        operation_mode: 'off'
+
+  - alias: 'Turn on water heater in the morning'
+    trigger:
+      - platform: time
+        at: '06:00:00'
+    condition:
+      - condition: state
+        entity_id: device_tracker.philip
+        state: 'home'
+    action:
+      service: climate.set_operation_mode
+      data:
+        entity_id: climate.electric_water_heater
+        operation_mode: 'eco'

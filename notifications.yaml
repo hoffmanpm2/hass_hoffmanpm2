@@ -1,7 +1,11 @@
-  - name: MMS Message
+  - name: mms_message
     platform: smtp
     sender: !secret smtp_sender
     recipient: !secret smtp_recipients
     server: smtp.gmail.com
     username: !secret smtp_username
     password: !secret smtp_password
+
+  - name: notify_pushbullet
+    platform: pushbullet
+    api_key: !secret pushbullet_api_key

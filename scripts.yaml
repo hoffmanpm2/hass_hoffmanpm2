@@ -1,0 +1,64 @@
+  inclement_weather:
+    alias: Inclement Weather
+    sequence:
+      - service: notify.notify_pushbullet
+        data:
+          title: 'Weather Alert!'
+          message: 'Inclement weather expected today. Forecast: {{ states("sensor.dark_sky_hourly_summary") }}'
+          data:
+            file_url: "https://icons.wxug.com/data/weather-maps/radar/united-states/staunton-virginia-region-current-radar-animation.gif"
+
+  activate_outdoor_lights:
+    alias: Activate Outdoor Lights
+    sequence:
+      - alias: Activate Landscape Lighting
+        service: switch.turn_on
+        entity_id: switch.wemo_walkway_lights
+      - alias: Activate House Lighting
+        service: light.turn_on
+        data:
+          entity_id: [ light.porch_lights, light.driveway_lights ]
+
+  deactivate_outdoor_lights:
+    alias: Deactivate Outdoor Lights
+    sequence:
+      - alias: Deactivate Landscape Lighting
+        service: switch.turn_off
+        entity_id: switch.wemo_walkway_lights
+      - alias: Deactivate House Lighting
+        service: light.turn_off
+        data:
+          entity_id: [ light.porch_lights, light.driveway_lights ]
+        
+
+  activate_alarm_clock:
+    alias: Activate Alarm Clock
+    sequence:
+#      - alias: Set Volume Level for Greeting
+#        service: media_player.volume_set
+#        data:
+#          entity_id: media_player.master_bedroom_speaker
+#          volume_level: '0.3'
+#      - delay:
+#          seconds: 2
+#      - alias: Play Greeting
+#        service: tts.google_say
+#        data:
+#          entity_id: media_player.master_bedroom_speaker
+#          message: 'Good morning Philip. Its time to wake up.'
+#      - delay:
+#          seconds: 5
+      - alias: Set Volume Level for Alarm
+        service: media_player.volume_set
+        data:
+          entity_id: media_player.master_bedroom_speaker
+          volume_level: '0.55'
+      - delay:
+          seconds: 2
+      - alias: Play Alarm MP3 from Website
+        service: media_player.play_media
+        data:
+          entity_id: media_player.master_bedroom_speaker
+          media_content_id: 'https://static1.squarespace.com/static/542f4b8ae4b0fe7f8b6c08c5/5a368f0e24a6949ae3f0542d/5a3690cd24a6949ae3f08199/1513525484069/IOS+10+-+Early+Riser+Alarm+%28Enhanced++Extended+Edition%29.mp3'
+          media_content_type: 'MUSIC'
+

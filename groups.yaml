@@ -1,3 +1,12 @@
+  alarm_clock:
+    name: Alarm Clock
+    view: no
+    entities:
+      - sensor.alarm_clock_time
+      - input_number.alarm_clock_hour
+      - input_number.alarm_clock_minute
+      - input_boolean.alarm_clock_status
+
   current_conditions:
     name: Current Conditions
     view: no
@@ -50,7 +59,14 @@
       - binary_sensor.upstairs_thermostat_is_using_emergency_heat
       - binary_sensor.upstairs_thermostat_online
       
-    
+#  water_heaters:
+#    name: Water Heater (Primary)
+#    view: no
+#    entities:
+#      - sensor.water_heater_primary_temp
+#      - sensor.water_heater_primary_mode
+#      - binary_sensor.water_heater_primary_vacation_mode
+
   home:
     name: Home
     view: yes

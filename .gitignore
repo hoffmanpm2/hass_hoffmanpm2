@@ -1,7 +1,7 @@
+*
+!*.yaml
+!scenes
+!.gitignore
 secrets.yaml
-*.db
-*.log
-*.conf
-.spotify-token-cache
-.uuid
-.HA_VERSION
+known_devices.yaml
+google_calendars.yaml

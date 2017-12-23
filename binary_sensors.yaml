@@ -1,0 +1,13 @@
+#  - platform: template
+#    sensors:
+#      water_heater_primary_vacation_mode:
+#        value_template: "{{ states.climate.electric_water_heater.attributes.vacation_mode }}"
+     
+  - platform: workday
+    name: workday_tomorrow
+    country: US
+    days_offset: 1
+
+  - platform: workday
+    name: workday
+    country: US    

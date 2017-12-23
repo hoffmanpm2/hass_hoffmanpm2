@@ -59,17 +59,37 @@ sun:
 tts:
   - platform: google
 
-group: !include groups.yaml
-automation: !include automations.yaml
-script: !include scripts.yaml
-weblink: !include weblinks.yaml
-sensor: !include sensors.yaml
-camera: !include cameras.yaml
-notify: !include notifications.yaml
-media_player: !include media_players.yaml
-
 nest:
   client_id: !secret nest_client_id
   client_secret: !secret nest_client_secret
 
 wink:
+
+wemo:
+  static:
+    - 192.168.1.207
+
+ifttt:
+  key: !secret ifttt_key
+
+neato:
+  username: !secret neato_username
+  password: !secret neato_password
+
+google:
+  client_id: !secret google_apis_client_id
+  client_secret: !secret google_apis_client_secret
+
+group: !include groups.yaml
+script: !include scripts.yaml
+automation: !include automations.yaml
+weblink: !include weblinks.yaml
+sensor: !include sensors.yaml
+camera: !include cameras.yaml
+notify: !include notifications.yaml
+media_player: !include media_players.yaml
+binary_sensor: !include binary_sensors.yaml
+light: !include lights.yaml
+input_number: !include input_numbers.yaml
+input_boolean: !include input_booleans.yaml
+device_tracker: !include device_trackers.yaml

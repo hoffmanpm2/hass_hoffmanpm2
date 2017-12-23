@@ -32,11 +32,47 @@
     friendly_name: Network Status
     icon: mdi:network
 
+#  binary_sensor.water_heater_primary_vacation_mode:
+#    friendly_name: Vacation Mode
+#    icon: mdi:beach
+
+  binary_sensor.workday:
+    hidden: true
+
+  binary_sensor.workday_tomorrow:
+    friendly_name: Working Tomorrow
+    hidden: true
+
   climate.downstairs:
     hidden: true
 
+#  climate.electric_water_heater:
+#    hidden: true
+
   climate.upstairs:
     hidden: true
+
+  input_boolean.alarm_clock_status:
+    friendly_name: Status
+    icon: mdi:alarm-check
+
+  input_number.alarm_clock_hour:
+    friendly_name: 'Hour'
+    icon: mdi:timer
+
+  input_number.alarm_clock_minute:
+    friendly_name: 'Minute'
+    icon: mdi:timer
+
+  sensor.alarm_clock_hour:
+    hidden: true
+
+  sensor.alarm_clock_minute:
+    hidden: true
+
+  sensor.alarm_clock_time:
+    friendly_name: Time
+    icon: mdi:alarm
 
   sensor.dark_sky_daily_high_temperature:
     friendly_name: High Temperature
@@ -48,19 +84,19 @@
     friendly_name: Precipitation Rate
 
   sensor.dark_sky_daily_summary:
-    friendly_name: Ext. Forecast
+    friendly_name: Extended
 
   sensor.dark_sky_dew_point:
     friendly_name: Dew Point
 
   sensor.dark_sky_hourly_summary:
-    friendly_name: Today's Forecast
+    friendly_name: Today
 
   sensor.dark_sky_humidity:
     friendly_name: Humidity
 
   sensor.dark_sky_minutely_summary:
-    friendly_name: For the Next Hour
+    friendly_name: Next Hour
 
   sensor.dark_sky_precip_intensity:
     friendly_name: Precipitation Rate
@@ -114,6 +150,9 @@
     friendly_name: Sunset
     icon: mdi:weather-sunset-down
 
+  sensor.time:
+    hidden: true
+
   sensor.upstairs_thermostat_humidity:
     friendly_name: Humidity
     icon: mdi:water-percent
@@ -133,6 +172,17 @@
   sensor.upstairs_thermostat_temperature:
     friendly_name: Temperature
     icon: mdi:thermometer
+
+#  sensor.water_heater_primary_mode:
+#    friendly_name: Mode
+#    icon: mdi:fire
+
+#  sensor.water_heater_primary_temp:
+#    friendly_name: Temperature
+#    icon: mdi:thermometer
+
+  sun.sun:
+    hidden: true
 
   weblink.pfsense:
     friendly_name: pfSense

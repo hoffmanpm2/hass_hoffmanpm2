@@ -1,0 +1,3 @@
+  - platform: decora_wifi
+    username: !secret leviton_email
+    password: !secret leviton_password
