@@ -1,8 +1,38 @@
-# Receive an alert when there is snow, ice, sleet, or freezing rain in the forecast.
 # Receive an alert at sunrise when there is a significant chance of rain in the forecast.
-# Receive an alert when a watch/warning is issued. There should be a way to indicate severity.
-# Good night (shut off lights, lock doors)
 # Turn on lights and unlock doors in the event of an emergency.
+
+  - alias: 'Winter Weather Alert'
+    trigger:
+      - platform: time
+        at: '12:00:00'
+    condition:
+      condition: or
+      conditions:
+        - condition: template
+          value_template: "'snow' in {{ states.sensor.pws_weather_2d.state }}"
+        - condition: template
+          value_template: "'snow' in {{ states.sensor.pws_weather_2n.state }}"
+    action:
+      service: notify.mms_message
+      data:
+        title: 'Winter Weather Alert!'
+        message: "{% if 'snow' in {{ states.sensor.pws_weather_2d.state }} %}Tomorrow's Forecast: {{ states.sensor.pws_weather_2d.state }}{% elif 'snow' in {{ states.sensor.pws_weather_2n.state }} %}Tomorrow Night's Forecast: {{ states.sensor.pws_weather_2n.state }}{% endif %}"
+
+  - alias: 'Severe Weather Alert'
+    trigger:
+      - platform: template
+        value_template: '{{ states.sensor.pws_alerts.attributes.Description == "Tornado Warning" }}'
+      - platform: template
+        value_template: '{{ states.sensor.pws_alerts.attributes.Description_TOR == "Tornado Warning" }}'
+      - platform: template
+        value_template: '{{ states.sensor.pws_alerts.attributes.Description == "Severe Thunderstorm Warning" }}'
+      - platform: template
+        value_template: '{{ states.sensor.pws_alerts.attributes.Description_WRN == "Severe Thunderstorm Warning" }}'
+    action:
+      service: notify.mms_message
+      data:
+        title: 'Severe Weather Alert!'
+        message: '{{ states.sensor.pws_alerts.Message }}{{ states.sensor.pws_alerts.Message_TOR }} {{ states.sensor.pws_alerts.Message_WRN }}'
 
   - alias: 'Turn on walkway lights at sunset'
     trigger:
@@ -31,10 +61,6 @@
     trigger:
       - platform: time
         at: '00:00:00'
-    condition:
-      condition: state
-      entity_id: script.activate_outdoor_lights
-      state: 'on'
     action:
       service: script.turn_on
       entity_id: script.deactivate_outdoor_lights
@@ -62,53 +88,63 @@
       service: script.turn_on
       entity_id: script.activate_alarm_clock
 
-#  - alias: 'Vacuum Downstairs'
-#    trigger:
-#      - platform: time
-#        at: '11:00:00'
-#    condition:
-#      condition: and
-#      conditions:
-#        - condition: state
-#          entity_id: binary_sensor.workday
-#          state: 'on'
-#        - condition: time
-#          weekday:
-#            - tue
-#            - fri
-#        - condition: state
-#          entity_id: calendar.day_off
-#          state: 'off'
-#        - condition: state
-#          entity_id: device_tracker.philip
-#          state: 'home'
-#    action:
+  - alias: 'Vacuum Downstairs'
+    trigger:
+      - platform: time
+        at: '11:00:00'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.workday
+          state: 'on'
+        - condition: time
+          weekday:
+            - tue
+            - fri
+        - condition: state
+          entity_id: calendar.day_off
+          state: 'off'
+        - condition: state
+          entity_id: device_tracker.philip
+          state: 'home'
+        - condition: state
+          entity_id: input_select.visitor_mode
+          state: 'False'
+    action:
 #      service: vacuum.turn_on
 #      entity_id: vacuum.downstairs_botvac
+      service: ifttt.trigger
+      data: { "event": "VacuumDownstairs" }
 
-#  - alias: 'Vacuum Upstairs'
-#    trigger:
-#      - platform: time
-#        at: '11:00:00'
-#    condition:
-#      condition: and
-#      conditions:
-#        - condition: state
-#          entity_id: binary_sensor.workday
-#          state: 'on'
-#        - condition: time
-#          weekday:
-#            - tue
-#            - fri
-#        - condition: state
-#          entity_id: calendar.day_off
-#          state: 'off'
-#        - condition: state
-#          entity_id: device_tracker.philip
-#          state: 'home'
-#    action:
+  - alias: 'Vacuum Upstairs'
+    trigger:
+      - platform: time
+        at: '11:00:00'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.workday
+          state: 'on'
+        - condition: time
+          weekday:
+            - tue
+            - fri
+        - condition: state
+          entity_id: calendar.day_off
+          state: 'off'
+        - condition: state
+          entity_id: device_tracker.philip
+          state: 'home'
+        - condition: state
+          entity_id: input_select.visitor_mode
+          state: 'False'
+    action:
 #      service: vacuum.turn_on
 #      entity_id: vacuum.upstairs_botvac
+      service: ifttt.trigger
+      data: { "event": "VacuumUpstairs" }
 
   - alias: 'Activate Away Mode (away for 20-30 minutes)'
     trigger:
@@ -118,6 +154,10 @@
         to: 'not_home'
         for:
           minutes: 20
+    condition:
+      condition: state
+      entity_id: input_select.visitor_mode
+      state: 'False'
     action:
       service: script.turn_on
       entity_id: script.activate_away_mode
@@ -136,10 +176,6 @@
     trigger:
       - platform: time
         at: '00:00:00'
-    condition:
-      - condition: state
-        entity_id: device_tracker.philip
-        state: 'home'
     action:
       service: climate.set_operation_mode
       data:
@@ -160,7 +196,7 @@
         entity_id: climate.electric_water_heater
         operation_mode: 'eco'
 
-  - alias: 'Activate solarized theme at startup'
+  - alias: 'Activate theme at startup'
     trigger:
       - platform: homeassistant
         event: start

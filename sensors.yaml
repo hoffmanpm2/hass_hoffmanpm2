@@ -1,23 +1,23 @@
-  - platform: darksky
-    api_key: !secret darksky_api_key
-    monitored_conditions:
-      - summary
-      - precip_type
-      - precip_intensity
-      - precip_probability
-      - temperature
-      - dew_point
-      - wind_speed
-      - wind_bearing
-      - humidity
-      - pressure
-      - visibility
-      - minutely_summary
-      - hourly_summary
-      - daily_summary
-      - temperature_max
-      - temperature_min
-      - precip_intensity_max
+#  - platform: darksky
+#    api_key: !secret darksky_api_key
+#    monitored_conditions:
+#      - summary
+#      - precip_type
+#      - precip_intensity
+#      - precip_probability
+#      - temperature
+#      - dew_point
+#      - wind_speed
+#      - wind_bearing
+#      - humidity
+#      - pressure
+#      - visibility
+#      - minutely_summary
+#      - hourly_summary
+#      - daily_summary
+#      - temperature_max
+#      - temperature_min
+#      - precip_intensity_max
 
   - platform: template
     sensors:
@@ -49,3 +49,41 @@
             0
           {%- endif -%}
             {{ states.sensor.alarm_clock_minute.state }}
+      pws_forecast:
+        value_template: >-
+          {% if now().hour >= 17 -%}
+            {{ states.sensor.pws_weather_1n.state }}
+          {% else %}
+            {{ states.sensor.pws_weather_1d.state }}
+          {%- endif -%}
+      pws_temperature:
+        value_template: >-
+          {{ states.sensor.pws_temp_f.state | round }}
+          {{ states.sensor.pws_temp_f.attributes.unit_of_measurement }}
+          (Feels Like 
+          {{ states.sensor.pws_feelslike_f.state }}
+          {{ states.sensor.pws_feelslike_f.attributes.unit_of_measurement }}
+          )
+
+  - platform: wunderground
+    api_key: ebc22c4ed5812bb9
+    monitored_conditions:
+      - alerts
+      - dewpoint_f
+      - feelslike_f
+      - precip_1d
+      - precip_1d_in
+      - pressure_mb
+      - relative_humidity
+      - temp_f
+      - temp_high_1d_f
+      - temp_low_1d_f
+      - visibility_mi
+      - weather_1h
+      - weather_1d
+      - weather_1n
+      - weather_2d
+      - weather_2n
+      - wind_mph
+      - wind_dir
+

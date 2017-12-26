@@ -11,29 +11,35 @@
     name: Current Conditions
     view: no
     entities:
-      - sensor.dark_sky_summary
-      - sensor.dark_sky_temperature
-      - sensor.dark_sky_humidity
-      - sensor.dark_sky_dew_point
-      - sensor.dark_sky_pressure
-      - sensor.dark_sky_wind_speed
-      - sensor.dark_sky_wind_bearing
-      - sensor.dark_sky_visibility
-      - sensor.dark_sky_precip_intensity
+      - sensor.pws_weather_1h
+      - sensor.pws_temperature
+      - sensor.pws_relative_humidity
+      - sensor.pws_dewpoint_f
+      - sensor.pws_pressure_mb
+      - sensor.pws_wind_mph
+      - sensor.pws_wind_dir
+      - sensor.pws_visibility_mi
+      - sensor.pws_alerts
+
+  flags:
+    name: Flags
+    view: no
+    entities:
+      - input_select.visitor_mode
 
   forecasted_conditions:
     name: Forecast
     view: no
     entities:
-      - sensor.dark_sky_minutely_summary
-      - sensor.dark_sky_hourly_summary
-      - sensor.dark_sky_daily_high_temperature
-      - sensor.dark_sky_daily_low_temperature
-      - sensor.dark_sky_precip_probability
-      - sensor.dark_sky_daily_max_precip_intensity
+      - sensor.pws_forecast
+      - sensor.pws_temp_high_1d_f
+      - sensor.pws_temp_low_1d_f
+      - sensor.pws_precip_1d
+      - sensor.pws_precip_1d_in
       - sensor.sunrise
       - sensor.sunset
-      - sensor.dark_sky_daily_summary
+      - sensor.pws_weather_2d
+      - sensor.pws_weather_2n
 
   hvac_downstairs:
     name: Heating & Cooling (Downstairs)
@@ -58,29 +64,90 @@
       - sensor.upstairs_thermostat_hvac_state
       - binary_sensor.upstairs_thermostat_is_using_emergency_heat
       - binary_sensor.upstairs_thermostat_online
-      
-#  water_heaters:
-#    name: Water Heater (Primary)
-#    view: no
-#    entities:
-#      - sensor.water_heater_primary_temp
-#      - sensor.water_heater_primary_mode
-#      - binary_sensor.water_heater_primary_vacation_mode
 
-  home:
-    name: Home
-    view: yes
-    icon: mdi:home-outline
+  indoor_lights:
+    name: Lights
+    view: no
+    entities:
+      - group.upstairs_lights
+
+  office_devices:
+    name: Office
+    view: no
+    entities:
+      - light.office_lights
+
+  outdoor_lights:
+    name: Lights
+    view: no
+    entities:
+      - light.driveway_lights
+      - light.porch_lights
+      - switch.wemo_walkway_lights
+
+  people:
+    name: People
+    view: no
+    entities:
+      - device_tracker.philip
+
+  upstairs_lights:
+    name: Upstairs Lights
+    view: no
+    entities:
+      - light.office_lights
+
+  vacuums:
+    name: Vacuum Cleaners
+    view: no
+    entities:
+      - vacuum.neato_downstairs
+      - vacuum.neato_upstairs
+
+  water_heaters:
+    name: Water Heaters
+    view: no
+    entities:
+      - climate.electric_water_heater
+
+  weblinks:
+    name: Links
+    view: no
     entities:
       - weblink.pfsense
       - weblink.wireless_ap_home
       - weblink.wireless_ap_garage
       - weblink.plex
       - weblink.obi200
-      - group.current_conditions
+
+  default_view:
+    name: Home
+    view: yes
+    icon: mdi:home-outline
+    entities:
+      - group.alarm_clock
+      - group.people
       - group.hvac_downstairs
       - group.hvac_upstairs
+      - group.water_heaters
+      - group.vacuums
+      - group.indoor_lights
+      - camera.neato_downstairs_cleaning_map
+      - camera.neato_upstairs_cleaning_map
 
+  garage:
+    name: Garage
+    view: yes
+    icon: mdi:garage
+    entities:
+#      - group.hvac_garage
+
+  outdoors: 
+    name: Outdoors
+    view: yes
+    icon: mdi:pine-tree
+    entities:
+      - group.outdoor_lights
 
   weather:
     name: Weather
@@ -90,3 +157,14 @@
       - group.current_conditions
       - group.forecasted_conditions
       - camera.weather_radar
+
+  admin:
+    name: Administrator
+    view: yes
+    icon: mdi:account-key
+    entities:
+      - group.all_automations
+      - group.all_scripts
+      - group.flags
+      - group.weblinks
+      - group.calendar

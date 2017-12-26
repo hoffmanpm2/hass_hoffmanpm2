@@ -52,6 +52,18 @@
   climate.upstairs:
     hidden: true
 
+  group.all_automations:
+    friendly_name: Automations
+    hidden: false
+
+  group.all_scripts:
+    friendly_name: Scripts
+    hidden: false
+
+  group.calendar:
+    friendly_name: Calendar
+    hidden: false
+
   input_boolean.alarm_clock_status:
     friendly_name: Status
     icon: mdi:alarm-check
@@ -98,12 +110,6 @@
   sensor.dark_sky_minutely_summary:
     friendly_name: Next Hour
 
-  sensor.dark_sky_precip_intensity:
-    friendly_name: Precipitation Rate
-
-  sensor.dark_sky_precip_probability:
-    friendly_name: Chance of Precipitation
-
   sensor.dark_sky_pressure:
     friendly_name: Atmospheric Pressure
 
@@ -141,6 +147,41 @@
   sensor.downstairs_thermostat_temperature:
     friendly_name: Temperature
     icon: mdi:thermometer
+
+  sensor.pws_feelslike_f:
+    hidden: true
+
+  sensor.pws_forecast:
+    friendly_name: Forecast
+    icon: mdi:weather-cloudy
+
+  sensor.pws_precip_1d:
+    friendly_name: Chance of Precipitation
+
+  sensor.pws_precip_1d_in:
+    friendly_name: Precipitation Rate
+
+  sensor.pws_temp_f:
+    hidden: true
+
+  sensor.pws_temp_high_1d_f:
+    friendly_name: High Temperature
+
+  sensor.pws_temp_low_1d_f:
+    friendly_name: Low Temperature
+
+  sensor.pws_temperature:
+    friendly_name: Temperature
+    icon: mdi:thermometer
+
+  sensor.pws_visibility_mi:
+    friendly_name: Visibility
+
+  sensor.pws_weather_1d:
+    hidden: true
+
+  sensor.pws_weather_1n:
+    hidden: true
 
   sensor.sunrise:
     friendly_name: Sunrise
@@ -180,6 +221,12 @@
 #  sensor.water_heater_primary_temp:
 #    friendly_name: Temperature
 #    icon: mdi:thermometer
+
+  switch.neato_downstairs_schedule:
+    hidden: true
+
+  switch.neato_upstairs_schedule:
+    hidden: true
 
   sun.sun:
     hidden: true

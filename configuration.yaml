@@ -187,16 +187,17 @@ google:
   client_id: !secret google_apis_client_id
   client_secret: !secret google_apis_client_secret
 
-group: !include groups.yaml
-script: !include scripts.yaml
 automation: !include automations.yaml
-weblink: !include weblinks.yaml
-sensor: !include sensors.yaml
-camera: !include cameras.yaml
-notify: !include notifications.yaml
-media_player: !include media_players.yaml
 binary_sensor: !include binary_sensors.yaml
-light: !include lights.yaml
-input_number: !include input_numbers.yaml
-input_boolean: !include input_booleans.yaml
+camera: !include cameras.yaml
 device_tracker: !include device_trackers.yaml
+group: !include groups.yaml
+input_boolean: !include input_booleans.yaml
+input_number: !include input_numbers.yaml
+input_select: !include input_selects.yaml
+light: !include lights.yaml
+media_player: !include media_players.yaml
+notify: !include notifications.yaml
+script: !include scripts.yaml
+sensor: !include sensors.yaml
+weblink: !include weblinks.yaml

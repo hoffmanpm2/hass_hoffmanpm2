@@ -1,36 +1,3 @@
-  inclement_weather:
-    alias: Inclement Weather
-    sequence:
-      - service: notify.notify_pushbullet
-        data:
-          title: 'Weather Alert!'
-          message: 'Inclement weather expected today. Forecast: {{ states("sensor.dark_sky_hourly_summary") }}'
-          data:
-            file_url: "https://icons.wxug.com/data/weather-maps/radar/united-states/staunton-virginia-region-current-radar-animation.gif"
-
-  activate_outdoor_lights:
-    alias: Activate Outdoor Lights
-    sequence:
-      - alias: Activate Landscape Lighting
-        service: switch.turn_on
-        entity_id: switch.wemo_walkway_lights
-      - alias: Activate House Lighting
-        service: light.turn_on
-        data:
-          entity_id: [ light.porch_lights, light.driveway_lights ]
-
-  deactivate_outdoor_lights:
-    alias: Deactivate Outdoor Lights
-    sequence:
-      - alias: Deactivate Landscape Lighting
-        service: switch.turn_off
-        entity_id: switch.wemo_walkway_lights
-      - alias: Deactivate House Lighting
-        service: light.turn_off
-        data:
-          entity_id: [ light.porch_lights, light.driveway_lights ]
-        
-
   activate_alarm_clock:
     alias: Activate Alarm Clock
     sequence:
@@ -75,6 +42,17 @@
           entity_id: climate.electric_water_heater
           operation_mode: 'off'
 
+  activate_outdoor_lights:
+    alias: Activate Outdoor Lights
+    sequence:
+      - alias: Activate Landscape Lighting
+        service: switch.turn_on
+        entity_id: switch.wemo_walkway_lights
+      - alias: Activate House Lighting
+        service: light.turn_on
+        data:
+          entity_id: [ light.porch_lights, light.driveway_lights ]
+
   deactivate_away_mode:
     alias: Deactivate Away Mode
     sequence:
@@ -88,3 +66,57 @@
           entity_id: climate.electric_water_heater
           operation_mode: 'eco'
 
+  deactivate_outdoor_lights:
+    alias: Deactivate Outdoor Lights
+    sequence:
+      - alias: Deactivate Landscape Lighting
+        service: switch.turn_off
+        entity_id: switch.wemo_walkway_lights
+      - alias: Deactivate House Lighting
+        service: light.turn_off
+        data:
+          entity_id: [ light.porch_lights, light.driveway_lights ]
+
+#  good_morning:
+#    alias: Good Morning
+#    sequence:
+#      - alias: Deactivate Alarm Clock
+#        service: media_player.media_stop
+#        data:
+#          entity_id: media_player.master_bedroom_speaker
+#      - delay:
+#          seconds: 2
+#      - alias: Play Message
+#        service: tts.google_say
+#        data:
+#          entity_id: media_player.office_speaker
+#          message: "Oh. It's you again. Well..."
+#             {{ ["Good morning.", "Hello.", "Hey.", "Oh it's you again. Well..."] | random }}
+#             It's currently {{ states.sensor.dark_sky_summary }} 
+#             and {{ states.sensor.dark_sky_temperature.state | round }} 
+#             degrees. Today will be {{ states.sensor.dark_sky_hourly_summary.state | replace ".", "") }}, 
+#             with a high of {{ states.sensor.dark_sky_daily_high_temperature.state | round }} 
+#             degrees and a low of {{ states.sensor.dark_sky_daily_low_temperature.state | round }} degrees.
+
+  good_night:
+    alias: Good Night
+    sequence:
+      - alias: Deactivate Outdoor Lights
+        service: script.turn_on
+        data:
+          entity_id: script.deactivate_outdoor_lighting
+      - alias: Deactivate Water Heater
+        service: climate.set_operation_mode
+        data:
+          entity_id: climate.electric_water_heater
+          operation_mode: 'off'
+
+  leaving_home:
+    alias: Leaving the House
+    sequence:
+      - delay:
+          minutes: 5
+      - alias: Activate Away Mode
+        service: script.turn_on
+        data:
+          entity_id: script.activate_away_mode
