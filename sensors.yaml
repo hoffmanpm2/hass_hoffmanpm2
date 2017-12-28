@@ -1,38 +1,3 @@
-#  - platform: darksky
-#    api_key: !secret darksky_api_key
-#    monitored_conditions:
-#      - summary
-#      - precip_type
-#      - precip_intensity
-#      - precip_probability
-#      - temperature
-#      - dew_point
-#      - wind_speed
-#      - wind_bearing
-#      - humidity
-#      - pressure
-#      - visibility
-#      - minutely_summary
-#      - hourly_summary
-#      - daily_summary
-#      - temperature_max
-#      - temperature_min
-#      - precip_intensity_max
-
-  - platform: template
-    sensors:
-      sunrise:
-        value_template: '{% set timestamp = as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom("%-I:%M") %} {{ timestamp }} AM'
-      sunset:
-        value_template: '{% set timestamp = as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom("%-I:%M") %} {{ timestamp }} PM'
-#      water_heater_primary_temp:
-#        value_template: "{{ states.climate.electric_water_heater.attributes.temperature }} {{ states.climate.electric_water_heater.attributes.unit_of_measurement }}"
-#      water_heater_primary_mode:
-#        value_template: "{{ states.climate.electric_water_heater.attributes.operation_mode }}"
-
-  - platform: time_date
-    display_options:
-      - 'time'
   - platform: template
     sensors:
       alarm_clock_hour:
@@ -49,6 +14,10 @@
             0
           {%- endif -%}
             {{ states.sensor.alarm_clock_minute.state }}
+      away_mode_downstairs:
+        value_template: '{{ states.climate.downstairs.attributes.away_mode }}'
+      away_mode_upstairs:
+        value_template: '{{ states.climate.upstairs.attributes.away_mode }}'
       pws_forecast:
         value_template: >-
           {% if now().hour >= 17 -%}
@@ -64,6 +33,14 @@
           {{ states.sensor.pws_feelslike_f.state }}
           {{ states.sensor.pws_feelslike_f.attributes.unit_of_measurement }}
           )
+      sunrise:
+        value_template: '{% set timestamp = as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom("%-I:%M") %} {{ timestamp }} AM'
+      sunset:
+        value_template: '{% set timestamp = as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom("%-I:%M") %} {{ timestamp }} PM'
+
+  - platform: time_date
+    display_options:
+      - 'time'
 
   - platform: wunderground
     api_key: ebc22c4ed5812bb9

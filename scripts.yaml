@@ -1,20 +1,6 @@
   activate_alarm_clock:
     alias: Activate Alarm Clock
     sequence:
-#      - alias: Set Volume Level for Greeting
-#        service: media_player.volume_set
-#        data:
-#          entity_id: media_player.master_bedroom_speaker
-#          volume_level: '0.3'
-#      - delay:
-#          seconds: 2
-#      - alias: Play Greeting
-#        service: tts.google_say
-#        data:
-#          entity_id: media_player.master_bedroom_speaker
-#          message: 'Good morning Philip. Its time to wake up.'
-#      - delay:
-#          seconds: 5
       - alias: Set Volume Level for Alarm
         service: media_player.volume_set
         data:
@@ -32,10 +18,6 @@
   activate_away_mode:
     alias: Activate Away Mode
     sequence:
-      - alias: Activate Away Mode for Nest Thermostats
-        service: nest.set_mode
-        data:
-          home_mode: 'away'
       - alias: Deactivate Water Heater
         service: climate.set_operation_mode
         data:
@@ -56,10 +38,6 @@
   deactivate_away_mode:
     alias: Deactivate Away Mode
     sequence:
-      - alias: Deactivate Away Mode for Nest Thermostats
-        service: nest.set_mode
-        data:
-          home_mode: 'home'
       - alias: Activate Water Heater
         service: climate.set_operation_mode
         data:
@@ -110,13 +88,3 @@
         data:
           entity_id: climate.electric_water_heater
           operation_mode: 'off'
-
-  leaving_home:
-    alias: Leaving the House
-    sequence:
-      - delay:
-          minutes: 5
-      - alias: Activate Away Mode
-        service: script.turn_on
-        data:
-          entity_id: script.activate_away_mode

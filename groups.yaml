@@ -65,13 +65,7 @@
       - binary_sensor.upstairs_thermostat_is_using_emergency_heat
       - binary_sensor.upstairs_thermostat_online
 
-  indoor_lights:
-    name: Lights
-    view: no
-    entities:
-      - group.upstairs_lights
-
-  office_devices:
+  office:
     name: Office
     view: no
     entities:
@@ -84,18 +78,6 @@
       - light.driveway_lights
       - light.porch_lights
       - switch.wemo_walkway_lights
-
-  people:
-    name: People
-    view: no
-    entities:
-      - device_tracker.philip
-
-  upstairs_lights:
-    name: Upstairs Lights
-    view: no
-    entities:
-      - light.office_lights
 
   vacuums:
     name: Vacuum Cleaners
@@ -131,7 +113,7 @@
       - group.hvac_upstairs
       - group.water_heaters
       - group.vacuums
-      - group.indoor_lights
+      - group.office
       - camera.neato_downstairs_cleaning_map
       - camera.neato_upstairs_cleaning_map
 

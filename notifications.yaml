@@ -5,7 +5,3 @@
     server: smtp.gmail.com
     username: !secret smtp_username
     password: !secret smtp_password
-
-  - name: notify_pushbullet
-    platform: pushbullet
-    api_key: !secret pushbullet_api_key

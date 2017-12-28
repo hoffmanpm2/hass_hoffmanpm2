@@ -1,46 +1,34 @@
 # Receive an alert at sunrise when there is a significant chance of rain in the forecast.
 # Turn on lights and unlock doors in the event of an emergency.
 
-  - alias: 'Winter Weather Alert'
+  - alias: 'Weather Alert'
     trigger:
-      - platform: time
-        at: '12:00:00'
+      - platform: numeric_state
+        entity_id: sensor.pws_alerts
+        above: 0
     condition:
       condition: or
       conditions:
         - condition: template
-          value_template: "'snow' in {{ states.sensor.pws_weather_2d.state }}"
+          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description', 'Tornado Warning') }}"
         - condition: template
-          value_template: "'snow' in {{ states.sensor.pws_weather_2n.state }}"
+          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description', 'Severe Thunderstorm Warning') }}"
+        - condition: template
+          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description', 'Winter Storm Warning') }}"
+        - condition: template
+          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description_TOR', 'Tornado Warning') }}"
+        - condition: template
+          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description_WRN', 'Severe Thunderstorm Warning') }}"
+        - condition: template
+          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description_WIN', 'Winter Storm Warning') }}"
     action:
-      service: notify.mms_message
-      data:
-        title: 'Winter Weather Alert!'
-        message: "{% if 'snow' in {{ states.sensor.pws_weather_2d.state }} %}Tomorrow's Forecast: {{ states.sensor.pws_weather_2d.state }}{% elif 'snow' in {{ states.sensor.pws_weather_2n.state }} %}Tomorrow Night's Forecast: {{ states.sensor.pws_weather_2n.state }}{% endif %}"
-
-  - alias: 'Severe Weather Alert'
-    trigger:
-      - platform: template
-        value_template: '{{ states.sensor.pws_alerts.attributes.Description == "Tornado Warning" }}'
-      - platform: template
-        value_template: '{{ states.sensor.pws_alerts.attributes.Description_TOR == "Tornado Warning" }}'
-      - platform: template
-        value_template: '{{ states.sensor.pws_alerts.attributes.Description == "Severe Thunderstorm Warning" }}'
-      - platform: template
-        value_template: '{{ states.sensor.pws_alerts.attributes.Description_WRN == "Severe Thunderstorm Warning" }}'
-    action:
-      service: notify.mms_message
-      data:
-        title: 'Severe Weather Alert!'
-        message: '{{ states.sensor.pws_alerts.Message }}{{ states.sensor.pws_alerts.Message_TOR }} {{ states.sensor.pws_alerts.Message_WRN }}'
+      service: ifttt.trigger
+      data: { "event": "WeatherAlert", "value1": "{{ sensor.pws_alerts.attributes.Description }}{{ sensor.pws_alerts.attributes.Description_TOR }}{{ sensor.pws_alerts.attributes.Description_WRN }}{{ sensor.pws_alerts.attributes.Description_WIN }}" }
 
   - alias: 'Turn on walkway lights at sunset'
     trigger:
       - platform: sun
         event: sunset
-    condition:
-      - condition: time
-        before: '23:00:00'
     action:
       service: script.turn_on
       entity_id: script.activate_outdoor_lights
@@ -50,9 +38,14 @@
       - platform: time
         at: '23:00:00'
     condition:
-      condition: state
-      entity_id: binary_sensor.workday_tomorrow
-      state: 'on'
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.workday_tomorrow
+          state: 'on'
+        - condition: state
+          entity_id: calendar.day_off
+          state: 'off'
     action:
       service: script.turn_on
       entity_id: script.deactivate_outdoor_lights
@@ -81,9 +74,8 @@
         - condition: state
           entity_id: calendar.day_off
           state: 'off'
-        - condition: state
-          entity_id: device_tracker.philip
-          state: 'home'
+        - condition: template
+          value_template: "{{ is_state('sensor.away_mode_upstairs', 'off') }}"
     action:
       service: script.turn_on
       entity_id: script.activate_alarm_clock
@@ -105,15 +97,12 @@
         - condition: state
           entity_id: calendar.day_off
           state: 'off'
-        - condition: state
-          entity_id: device_tracker.philip
-          state: 'home'
+        - condition: template
+          value_template: "{{ is_state('sensor.away_mode_downstairs', 'off') }}"
         - condition: state
           entity_id: input_select.visitor_mode
           state: 'False'
     action:
-#      service: vacuum.turn_on
-#      entity_id: vacuum.downstairs_botvac
       service: ifttt.trigger
       data: { "event": "VacuumDownstairs" }
 
@@ -134,26 +123,25 @@
         - condition: state
           entity_id: calendar.day_off
           state: 'off'
-        - condition: state
-          entity_id: device_tracker.philip
-          state: 'home'
+        - condition: template
+          value_template: "{{ is_state('sensor.away_mode_upstairs', 'off') }}"
         - condition: state
           entity_id: input_select.visitor_mode
           state: 'False'
     action:
-#      service: vacuum.turn_on
-#      entity_id: vacuum.upstairs_botvac
       service: ifttt.trigger
       data: { "event": "VacuumUpstairs" }
 
-  - alias: 'Activate Away Mode (away for 20-30 minutes)'
+  - alias: 'Activate Away Mode'
     trigger:
       - platform: state
-        entity_id: device_tracker.philip
-        from: 'home'
-        to: 'not_home'
-        for:
-          minutes: 20
+        entity_id: sensor.away_mode_downstairs
+        from: 'off'
+        to: 'on'
+      - platform: state
+        entity_id: sensor.away_mode_upstairs
+        from: 'off'
+        to: 'on'
     condition:
       condition: state
       entity_id: input_select.visitor_mode
@@ -165,9 +153,13 @@
   - alias: 'Deactivate Away Mode'
     trigger:
       - platform: state
-        entity_id: device_tracker.philip
-        from: 'not_home'
-        to: 'home'
+        entity_id: sensor.away_mode_downstairs
+        from: 'on'
+        to: 'off'
+      - platform: state
+        entity_id: sensor.away_mode_downstairs
+        from: 'on'
+        to: 'off'
     action:
       service: script.turn_on
       entity_id: script.deactivate_away_mode
@@ -187,9 +179,14 @@
       - platform: time
         at: '06:00:00'
     condition:
-      - condition: state
-        entity_id: device_tracker.philip
-        state: 'home'
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: sensor.away_mode_downstairs
+          state: 'off'
+        - condition: state
+          entity_id: sensor.away_mode_upstairs
+          state: 'off'
     action:
       service: climate.set_operation_mode
       data:
