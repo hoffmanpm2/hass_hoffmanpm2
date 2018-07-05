@@ -1,10 +1,34 @@
-  alarm_clock_hour:
+  onetime_alarm_clock_hour:
     min: 0
     max: 23
     step: 1
     initial: 7
 
-  alarm_clock_minute:
+  onetime_alarm_clock_minute:
+    min: 0
+    max: 55
+    step: 5
+    initial: 0
+
+  weekday_alarm_clock_hour:
+    min: 0
+    max: 23
+    step: 1
+    initial: 7
+
+  weekday_alarm_clock_minute:
+    min: 0
+    max: 55
+    step: 5
+    initial: 0
+
+  weekend_alarm_clock_hour:
+    min: 0
+    max: 23
+    step: 1
+    initial: 9
+
+  weekend_alarm_clock_minute:
     min: 0
     max: 55
     step: 5

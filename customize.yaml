@@ -57,28 +57,72 @@
     friendly_name: Calendar
     hidden: false
 
-  input_boolean.alarm_clock_status:
-    friendly_name: Status
-    icon: mdi:alarm-check
+  input_boolean.onetime_alarm_clock_status:
+    friendly_name: One-Time
+    icon: mdi:numeric-1-box-outline
 
-  input_number.alarm_clock_hour:
+  input_boolean.weekday_alarm_clock_status:
+    friendly_name: Weekday
+    icon: mdi:worker
+
+  input_boolean.weekend_alarm_clock_status:
+    friendly_name: Weekend
+    icon: mdi:human-handsup
+
+  input_number.onetime_alarm_clock_hour:
     friendly_name: 'Hour'
     icon: mdi:timer
 
-  input_number.alarm_clock_minute:
+  input_number.onetime_alarm_clock_minute:
+    friendly_name: 'Minute'
+    icon: mdi:timer
+
+  input_number.weekday_alarm_clock_hour:
+    friendly_name: 'Hour'
+    icon: mdi:timer
+
+  input_number.weekday_alarm_clock_minute:
+    friendly_name: 'Minute'
+    icon: mdi:timer
+
+  input_number.weekend_alarm_clock_hour:
+    friendly_name: 'Hour'
+    icon: mdi:timer
+
+  input_number.weekend_alarm_clock_minute:
     friendly_name: 'Minute'
     icon: mdi:timer
 
   light.office_lights:
     friendly_name: Lights
 
-  sensor.alarm_clock_hour:
+  sensor.onetime_alarm_clock_hour:
     hidden: true
 
-  sensor.alarm_clock_minute:
+  sensor.onetime_alarm_clock_minute:
     hidden: true
 
-  sensor.alarm_clock_time:
+  sensor.onetime_alarm_clock_time:
+    friendly_name: Time
+    icon: mdi:alarm
+
+  sensor.weekday_alarm_clock_hour:
+    hidden: true
+
+  sensor.weekday_alarm_clock_minute:
+    hidden: true
+
+  sensor.weekday_alarm_clock_time:
+    friendly_name: Time
+    icon: mdi:alarm
+
+  sensor.weekend_alarm_clock_hour:
+    hidden: true
+
+  sensor.weekend_alarm_clock_minute:
+    hidden: true
+
+  sensor.weekend_alarm_clock_time:
     friendly_name: Time
     icon: mdi:alarm
 

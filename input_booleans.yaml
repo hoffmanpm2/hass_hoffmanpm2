@@ -1,3 +1,9 @@
-  alarm_clock_status:
+  onetime_alarm_clock_status:
+    initial: off
+
+  weekday_alarm_clock_status:
+    initial: on
+
+  weekend_alarm_clock_status:
     initial: on
     

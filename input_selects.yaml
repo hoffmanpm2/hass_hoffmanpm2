@@ -1,7 +1,0 @@
-  visitor_mode:
-    name: Visitor Mode
-    options:
-      - On
-      - Off
-    initial: Off
-    icon: mdi:door-open

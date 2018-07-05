@@ -1,138 +1,7 @@
 # Receive an alert at sunrise when there is a significant chance of rain in the forecast.
 # Turn on lights and unlock doors in the event of an emergency.
 
-  - alias: 'Weather Alert'
-    trigger:
-      - platform: numeric_state
-        entity_id: sensor.pws_alerts
-        above: 0
-    condition:
-      condition: or
-      conditions:
-        - condition: template
-          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description', 'Tornado Warning') }}"
-        - condition: template
-          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description', 'Severe Thunderstorm Warning') }}"
-        - condition: template
-          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description', 'Winter Storm Warning') }}"
-        - condition: template
-          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description_TOR', 'Tornado Warning') }}"
-        - condition: template
-          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description_WRN', 'Severe Thunderstorm Warning') }}"
-        - condition: template
-          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description_WIN', 'Winter Storm Warning') }}"
-    action:
-      service: ifttt.trigger
-      data: { "event": "WeatherAlert", "value1": "{{ sensor.pws_alerts.attributes.Description }}{{ sensor.pws_alerts.attributes.Description_TOR }}{{ sensor.pws_alerts.attributes.Description_WRN }}{{ sensor.pws_alerts.attributes.Description_WIN }}" }
-
-  - alias: 'Turn on walkway lights at sunset'
-    trigger:
-      - platform: sun
-        event: sunset
-    action:
-      service: script.turn_on
-      entity_id: script.activate_outdoor_lights
-
-  - alias: 'Turn off walkway lights at 11pm'
-    trigger:
-      - platform: time
-        at: '23:00:00'
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: binary_sensor.workday_tomorrow
-          state: 'on'
-        - condition: state
-          entity_id: calendar.day_off
-          state: 'off'
-    action:
-      service: script.turn_on
-      entity_id: script.deactivate_outdoor_lights
-
-  - alias: 'Turn off walkway lights at midnight'
-    trigger:
-      - platform: time
-        at: '00:00:00'
-    action:
-      service: script.turn_on
-      entity_id: script.deactivate_outdoor_lights
-
-  - alias: 'Workday Alarm Clock'
-    trigger:
-      platform: template
-      value_template: '{{ states.sensor.time.state == states.sensor.alarm_clock_time.state }}'
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_boolean.alarm_clock_status
-          state: 'on'
-        - condition: state
-          entity_id: binary_sensor.workday
-          state: 'on'
-        - condition: state
-          entity_id: calendar.day_off
-          state: 'off'
-        - condition: template
-          value_template: "{{ is_state('sensor.away_mode_upstairs', 'off') }}"
-    action:
-      service: script.turn_on
-      entity_id: script.activate_alarm_clock
-
-  - alias: 'Vacuum Downstairs'
-    trigger:
-      - platform: time
-        at: '11:00:00'
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: binary_sensor.workday
-          state: 'on'
-        - condition: time
-          weekday:
-            - tue
-            - fri
-        - condition: state
-          entity_id: calendar.day_off
-          state: 'off'
-        - condition: template
-          value_template: "{{ is_state('sensor.away_mode_downstairs', 'off') }}"
-        - condition: state
-          entity_id: input_select.visitor_mode
-          state: 'False'
-    action:
-      service: ifttt.trigger
-      data: { "event": "VacuumDownstairs" }
-
-  - alias: 'Vacuum Upstairs'
-    trigger:
-      - platform: time
-        at: '11:00:00'
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: binary_sensor.workday
-          state: 'on'
-        - condition: time
-          weekday:
-            - tue
-            - fri
-        - condition: state
-          entity_id: calendar.day_off
-          state: 'off'
-        - condition: template
-          value_template: "{{ is_state('sensor.away_mode_upstairs', 'off') }}"
-        - condition: state
-          entity_id: input_select.visitor_mode
-          state: 'False'
-    action:
-      service: ifttt.trigger
-      data: { "event": "VacuumUpstairs" }
-
-  - alias: 'Activate Away Mode'
+  - alias: 'Away'
     trigger:
       - platform: state
         entity_id: sensor.away_mode_downstairs
@@ -142,15 +11,11 @@
         entity_id: sensor.away_mode_upstairs
         from: 'off'
         to: 'on'
-    condition:
-      condition: state
-      entity_id: input_select.visitor_mode
-      state: 'False'
     action:
       service: script.turn_on
       entity_id: script.activate_away_mode
 
-  - alias: 'Deactivate Away Mode'
+  - alias: 'Home'
     trigger:
       - platform: state
         entity_id: sensor.away_mode_downstairs
@@ -164,36 +29,7 @@
       service: script.turn_on
       entity_id: script.deactivate_away_mode
 
-  - alias: 'Turn off water heater at bedtime'
-    trigger:
-      - platform: time
-        at: '00:00:00'
-    action:
-      service: climate.set_operation_mode
-      data:
-        entity_id: climate.electric_water_heater
-        operation_mode: 'off'
-
-  - alias: 'Turn on water heater in the morning'
-    trigger:
-      - platform: time
-        at: '06:00:00'
-    condition:
-      condition: or
-      conditions:
-        - condition: state
-          entity_id: sensor.away_mode_downstairs
-          state: 'off'
-        - condition: state
-          entity_id: sensor.away_mode_upstairs
-          state: 'off'
-    action:
-      service: climate.set_operation_mode
-      data:
-        entity_id: climate.electric_water_heater
-        operation_mode: 'eco'
-
-  - alias: 'Activate theme at startup'
+  - alias: 'Home Assistant Start'
     trigger:
       - platform: homeassistant
         event: start
@@ -201,3 +37,262 @@
       service: frontend.set_theme
       data:
         name: PmxMononight
+
+  - alias: 'One-Time Alarm Clock'
+    trigger:
+      platform: template
+      value_template: '{{ states.sensor.time.state == states.sensor.onetime_alarm_clock_time.state }}'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.onetime_alarm_clock_status
+          state: 'on'
+        - condition: template
+          value_template: "{{ is_state('sensor.away_mode_upstairs', 'off') }}"
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: binary_sensor.workday
+              state: 'off'
+            - condition: state
+              entity_id: calendar.day_off
+              state: 'on'
+    action:
+      service: script.turn_on
+      entity_id: script.activate_onetime_alarm_clock
+
+  - alias: 'Before Sunset'
+    trigger:
+      - platform: sun
+        event: sunset
+        offset: "-00:45:00"
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: "{{ is_state('sensor.away_mode_downstairs', 'off') }}"
+        - condition: state
+          entity_id: calendar.vacation
+          state: 'off'
+    action:
+      service: script.turn_on
+      entity_id: script.activate_evening_lights
+
+  - alias: 'Sunset'
+    trigger:
+      - platform: sun
+        event: sunset
+    action:
+      service: script.turn_on
+      entity_id: script.activate_outdoor_lights
+
+  - alias: 'Vacation'
+    trigger:
+      - platform: state
+        entity_id: calendar.vacation
+        from: 'off'
+        to: 'on'
+    action:
+      service: script.turn_on
+      entity_id: script.activate_vacation_mode
+
+  - alias: 'Vacuum Downstairs'
+    trigger:
+      - platform: time
+        at: '14:00:00'
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          weekday:
+            - tue
+            - thu
+            - sat
+        - condition: state
+          entity_id: calendar.vacation
+          state: 'off'
+    action:
+      service: ifttt.trigger
+      data: { "event": "VacuumDownstairs" }
+
+  - alias: 'Vacuum Upstairs'
+    trigger:
+      - platform: time
+        at: '16:00:00'
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          weekday:
+            - tue
+            - thu
+            - sat
+        - condition: state
+          entity_id: calendar.vacation
+          state: 'off'
+    action:
+      service: ifttt.trigger
+      data: { "event": "VacuumUpstairs" }
+
+#  - alias: 'Weather Alert'
+#    trigger:
+#      - platform: numeric_state
+#        entity_id: sensor.pws_alerts
+#        above: 0
+#    condition:
+#      condition: or
+#      conditions:
+#        - condition: template
+#          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description', 'Tornado Warning') }}"
+#        - condition: template
+#          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description', 'Severe Thunderstorm Warning') }}"
+#        - condition: template
+#          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description', 'Winter Storm Warning') }}"
+#        - condition: template
+#          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description', 'Winter Weather Advisory') }}"
+#    action:
+#      service: notify.gcm
+#      data:
+#        message: 'The National Weather Service has issued a {{ sensor.pws_alerts.attributes.Description }} for your area.'
+
+  - alias: 'Weekday Alarm Clock'
+    trigger:
+      platform: template
+      value_template: '{{ states.sensor.time.state == states.sensor.weekday_alarm_clock_time.state }}'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.weekday_alarm_clock_status
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.workday
+          state: 'on'
+        - condition: state
+          entity_id: calendar.day_off
+          state: 'off'
+        - condition: state
+          entity_id: calendar.vacation
+          state: 'off'
+        - condition: template
+          value_template: "{{ is_state('sensor.away_mode_upstairs', 'off') }}"
+    action:
+      service: script.turn_on
+      entity_id: script.activate_alarm_clock
+
+  - alias: 'Weekday Morning'
+    trigger:
+      - platform: time
+        at: '06:00:00'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.workday
+          state: 'on'
+        - condition: state
+          entity_id: calendar.day_off
+          state: 'off'
+        - condition: state
+          entity_id: calendar.vacation
+          state: 'off'
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: sensor.away_mode_downstairs
+              state: 'off'
+            - condition: state
+              entity_id: sensor.away_mode_upstairs
+              state: 'off'
+    action:
+      service: script.turn_on
+      entity_id: script.good_morning
+
+  - alias: 'Weekday Night'
+    trigger:
+      - platform: time
+        at: '23:00:00'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.workday_tomorrow
+          state: 'on'
+        - condition: state
+          entity_id: calendar.day_off
+          state: 'off'
+        - condition: state
+          entity_id: calendar.vacation
+          state: 'off'
+    action:
+      service: script.turn_on
+      entity_id: script.good_night
+
+  - alias: 'Weekend Alarm Clock'
+    trigger:
+      platform: template
+      value_template: '{{ states.sensor.time.state == states.sensor.weekend_alarm_clock_time.state }}'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.weekend_alarm_clock_status
+          state: 'on'
+        - condition: state
+          entity_id: sensor.away_mode_upstairs
+          state: 'off'
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: binary_sensor.workday
+              state: 'off'
+            - condition: state
+              entity_id: calendar.day_off
+              state: 'on'
+            - condition: state
+              entity_id: calendar.vacation
+              state: 'on'
+    action:
+      service: script.turn_on
+      entity_id: script.activate_alarm_clock
+
+  - alias: 'Weekend Morning'
+    trigger:
+      - platform: time
+        at: '07:00:00'
+    condition:
+      condition: and
+      conditions:
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: binary_sensor.workday
+              state: 'off'
+            - condition: state
+              entity_id: calendar.day_off
+              state: 'on'
+            - condition: state
+              entity_id: calendar.vacation
+              state: 'on'
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: sensor.away_mode_downstairs
+              state: 'off'
+            - condition: state
+              entity_id: sensor.away_mode_upstairs
+              state: 'off'
+    action:
+      service: script.turn_on
+      entity_id: script.good_morning
+
+  - alias: 'Weekend Night'
+    trigger:
+      - platform: time
+        at: '00:00:00'
+    action:
+      service: script.turn_on
+      entity_id: script.good_night
+
+

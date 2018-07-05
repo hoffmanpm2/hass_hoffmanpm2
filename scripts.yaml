@@ -5,7 +5,7 @@
         service: media_player.volume_set
         data:
           entity_id: media_player.master_bedroom_speaker
-          volume_level: '0.55'
+          volume_level: '0.4'
       - delay:
           seconds: 2
       - alias: Play Alarm MP3 from Website
@@ -24,6 +24,35 @@
           entity_id: climate.electric_water_heater
           operation_mode: 'off'
 
+  activate_evening_lights:
+    alias: Activate Evening Lights
+    sequence:
+      - alias: Activate Downstairs Lights
+        service: light.turn_on
+        data:
+          entity_id: [ light.living_room_lamp ]
+
+  activate_onetime_alarm_clock:
+    alias: Activate One-Time Alarm Clock
+    sequence:
+      - alias: Disable one-time alarm clock
+        service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.onetime_alarm_clock_status
+      - alias: Set Volume Level for Alarm
+        service: media_player.volume_set
+        data:
+          entity_id: media_player.master_bedroom_speaker
+          volume_level: '0.4'
+      - delay:
+          seconds: 2
+      - alias: Play Alarm MP3 from Website
+        service: media_player.play_media
+        data:
+          entity_id: media_player.master_bedroom_speaker
+          media_content_id: 'https://static1.squarespace.com/static/542f4b8ae4b0fe7f8b6c08c5/5a368f0e24a6949ae3f0542d/5a3690cd24a6949ae3f08199/1513525484069/IOS+10+-+Early+Riser+Alarm+%28Enhanced++Extended+Edition%29.mp3'
+          media_content_type: 'MUSIC'
+
   activate_outdoor_lights:
     alias: Activate Outdoor Lights
     sequence:
@@ -33,7 +62,16 @@
       - alias: Activate House Lighting
         service: light.turn_on
         data:
-          entity_id: [ light.porch_lights, light.driveway_lights ]
+          entity_id: [ light.driveway_lights ]
+
+  activate_vacation_mode:
+    alias: Activate Vacation Mode
+    sequence:
+      - alias: Deactivate Water Heater
+        service: climate.set_operation_mode
+        data:
+          entity_id: climate.electric_water_heater
+          operation_mode: 'off'
 
   deactivate_away_mode:
     alias: Deactivate Away Mode
@@ -55,26 +93,33 @@
         data:
           entity_id: [ light.porch_lights, light.driveway_lights ]
 
-#  good_morning:
-#    alias: Good Morning
-#    sequence:
-#      - alias: Deactivate Alarm Clock
-#        service: media_player.media_stop
-#        data:
-#          entity_id: media_player.master_bedroom_speaker
-#      - delay:
-#          seconds: 2
-#      - alias: Play Message
-#        service: tts.google_say
-#        data:
-#          entity_id: media_player.office_speaker
-#          message: "Oh. It's you again. Well..."
-#             {{ ["Good morning.", "Hello.", "Hey.", "Oh it's you again. Well..."] | random }}
-#             It's currently {{ states.sensor.dark_sky_summary }} 
-#             and {{ states.sensor.dark_sky_temperature.state | round }} 
-#             degrees. Today will be {{ states.sensor.dark_sky_hourly_summary.state | replace ".", "") }}, 
-#             with a high of {{ states.sensor.dark_sky_daily_high_temperature.state | round }} 
-#             degrees and a low of {{ states.sensor.dark_sky_daily_low_temperature.state | round }} degrees.
+  good_morning:
+    alias: Good Morning
+    sequence:
+      - alias: Deactivate Eco Mode for Downstairs
+        service: climate.set_operation_mode
+        data:
+          entity_id: climate.downstairs
+          operation_mode: 'auto'
+      - alias: Set Downstairs Temperatures
+        service: climate.set_temperature
+        data:
+          entity_id: climate.downstairs
+          target_temp_high: '74'
+          target_temp_low: '65'
+          operation_mode: 'auto'
+      - alias: Set Upstairs Temperatures
+        service: climate.set_temperature
+        data:
+          entity_id: climate.upstairs
+          target_temp_high: '74'
+          target_temp_low: '67'
+          operation_mode: 'auto'
+      - alias: Activate Water Heater
+        service: climate.set_operation_mode
+        data:
+          entity_id: climate.electric_water_heater
+          operation_mode: 'eco'
 
   good_night:
     alias: Good Night
@@ -82,9 +127,20 @@
       - alias: Deactivate Outdoor Lights
         service: script.turn_on
         data:
-          entity_id: script.deactivate_outdoor_lighting
+          entity_id: script.deactivate_outdoor_lights
       - alias: Deactivate Water Heater
         service: climate.set_operation_mode
         data:
           entity_id: climate.electric_water_heater
           operation_mode: 'off'
+      - alias: Activate Eco Mode
+        service: climate.set_operation_mode
+        data:
+          entity_id: climate.downstairs
+          operation_mode: 'eco'
+      - alias: Set Bedtime Temperatures for Upstairs Thermostat
+        service: climate.set_temperature
+        data:
+          entity_id: climate.upstairs
+          target_temp_high: '70'
+          target_temp_low: '65'

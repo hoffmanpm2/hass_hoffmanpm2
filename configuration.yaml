@@ -154,7 +154,6 @@ camera: !include cameras.yaml
 group: !include groups.yaml
 input_boolean: !include input_booleans.yaml
 input_number: !include input_numbers.yaml
-input_select: !include input_selects.yaml
 light: !include lights.yaml
 media_player: !include media_players.yaml
 notify: !include notifications.yaml

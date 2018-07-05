@@ -1,23 +1,23 @@
   - platform: template
     sensors:
-      alarm_clock_hour:
-        value_template: '{{ states.input_number.alarm_clock_hour.state | int }}'
-      alarm_clock_minute:
-        value_template: '{{ states.input_number.alarm_clock_minute.state | int }}'
-      alarm_clock_time:
-        value_template: >-
-          {% if states.sensor.alarm_clock_hour.state|length == 1 -%}
-            0
-          {%- endif -%}
-            {{ states.sensor.alarm_clock_hour.state }}:
-          {%- if states.sensor.alarm_clock_minute.state|length == 1 -%}
-            0
-          {%- endif -%}
-            {{ states.sensor.alarm_clock_minute.state }}
       away_mode_downstairs:
         value_template: '{{ states.climate.downstairs.attributes.away_mode }}'
       away_mode_upstairs:
         value_template: '{{ states.climate.upstairs.attributes.away_mode }}'
+      onetime_alarm_clock_hour:
+        value_template: '{{ states.input_number.onetime_alarm_clock_hour.state | int }}'
+      onetime_alarm_clock_minute:
+        value_template: '{{ states.input_number.onetime_alarm_clock_minute.state | int }}'
+      onetime_alarm_clock_time:
+        value_template: >-
+          {% if states.sensor.onetime_alarm_clock_hour.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.onetime_alarm_clock_hour.state }}:
+          {%- if states.sensor.onetime_alarm_clock_minute.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.onetime_alarm_clock_minute.state }}
       pws_forecast:
         value_template: >-
           {% if now().hour >= 17 -%}
@@ -37,6 +37,34 @@
         value_template: '{% set timestamp = as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom("%-I:%M") %} {{ timestamp }} AM'
       sunset:
         value_template: '{% set timestamp = as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom("%-I:%M") %} {{ timestamp }} PM'
+      weekday_alarm_clock_hour:
+        value_template: '{{ states.input_number.weekday_alarm_clock_hour.state | int }}'
+      weekday_alarm_clock_minute:
+        value_template: '{{ states.input_number.weekday_alarm_clock_minute.state | int }}'
+      weekday_alarm_clock_time:
+        value_template: >-
+          {% if states.sensor.weekday_alarm_clock_hour.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.weekday_alarm_clock_hour.state }}:
+          {%- if states.sensor.weekday_alarm_clock_minute.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.weekday_alarm_clock_minute.state }}
+      weekend_alarm_clock_hour:
+        value_template: '{{ states.input_number.weekend_alarm_clock_hour.state | int }}'
+      weekend_alarm_clock_minute:
+        value_template: '{{ states.input_number.weekend_alarm_clock_minute.state | int }}'
+      weekend_alarm_clock_time:
+        value_template: >-
+          {% if states.sensor.weekend_alarm_clock_hour.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.weekend_alarm_clock_hour.state }}:
+          {%- if states.sensor.weekend_alarm_clock_minute.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.weekend_alarm_clock_minute.state }}
 
   - platform: time_date
     display_options:

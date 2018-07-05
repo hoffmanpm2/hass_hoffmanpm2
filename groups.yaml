@@ -1,11 +1,19 @@
-  alarm_clock:
-    name: Alarm Clock
+  alarm_clocks:
+    name: Alarm Clocks
     view: no
     entities:
-      - sensor.alarm_clock_time
-      - input_number.alarm_clock_hour
-      - input_number.alarm_clock_minute
-      - input_boolean.alarm_clock_status
+      - input_boolean.weekday_alarm_clock_status
+      - sensor.weekday_alarm_clock_time
+      - input_number.weekday_alarm_clock_hour
+      - input_number.weekday_alarm_clock_minute
+      - input_boolean.weekend_alarm_clock_status
+      - sensor.weekend_alarm_clock_time
+      - input_number.weekend_alarm_clock_hour
+      - input_number.weekend_alarm_clock_minute
+      - input_boolean.onetime_alarm_clock_status
+      - sensor.onetime_alarm_clock_time
+      - input_number.onetime_alarm_clock_hour
+      - input_number.onetime_alarm_clock_minute
 
   current_conditions:
     name: Current Conditions
@@ -21,11 +29,11 @@
       - sensor.pws_visibility_mi
       - sensor.pws_alerts
 
-  flags:
-    name: Flags
+  evening_lights:
+    name: Evening Lights
     view: no
     entities:
-      - input_select.visitor_mode
+      - light.living_room_lamp
 
   forecasted_conditions:
     name: Forecast
@@ -40,6 +48,7 @@
       - sensor.sunset
       - sensor.pws_weather_2d
       - sensor.pws_weather_2n
+      - weblink.full_forecast
 
   hvac_downstairs:
     name: Heating & Cooling (Downstairs)
@@ -65,6 +74,12 @@
       - binary_sensor.upstairs_thermostat_is_using_emergency_heat
       - binary_sensor.upstairs_thermostat_online
 
+  living_room:
+    name: Living Room
+    view: no
+    entities:
+      - light.living_room_lamp
+
   office:
     name: Office
     view: no
@@ -86,6 +101,20 @@
       - vacuum.neato_downstairs
       - vacuum.neato_upstairs
 
+  vacuum_downstairs:
+    name: Vacuum Cleaner
+    view: no
+    entities:
+      - vacuum.neato_downstairs
+      - camera.neato_downstairs_cleaning_map
+
+  vacuum_upstairs:
+    name: Vacuum Cleaner
+    view: no
+    entities:
+      - vacuum.neato_upstairs
+      - camera.neato_upstairs_cleaning_map
+
   water_heaters:
     name: Water Heaters
     view: no
@@ -101,21 +130,40 @@
       - weblink.wireless_ap_garage
       - weblink.plex
       - weblink.obi200
+      - weblink.resilio_sync
 
   default_view:
     name: Home
     view: yes
-    icon: mdi:home-outline
+    icon: mdi:home
     entities:
-      - group.alarm_clock
-      - group.people
+      - group.alarm_clocks
       - group.hvac_downstairs
       - group.hvac_upstairs
       - group.water_heaters
       - group.vacuums
+      - group.living_room
       - group.office
       - camera.neato_downstairs_cleaning_map
       - camera.neato_upstairs_cleaning_map
+
+  downstairs:
+    name: Downstairs
+    view: yes
+    icon: mdi:sofa
+    entities:
+      - group.hvac_downstairs
+      - group.living_room
+      - group.vacuum_downstairs
+
+  upstairs:
+    name: Upstairs
+    view: yes
+    icon: mdi:hotel
+    entities:
+      - group.hvac_upstairs
+      - group.office
+      - group.vacuum_upstairs
 
   garage:
     name: Garage
@@ -131,14 +179,19 @@
     entities:
       - group.outdoor_lights
 
+  security:
+    name: Security
+    view: yes
+    icon: mdi:shield
+
   weather:
     name: Weather
     view: yes
-    icon: mdi:weather-lightning
+    icon: mdi:white-balance-sunny
     entities:
       - group.current_conditions
-      - group.forecasted_conditions
       - camera.weather_radar
+      - group.forecasted_conditions
 
   admin:
     name: Administrator
@@ -147,6 +200,5 @@
     entities:
       - group.all_automations
       - group.all_scripts
-      - group.flags
       - group.weblinks
       - group.calendar

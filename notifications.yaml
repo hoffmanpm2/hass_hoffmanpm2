@@ -5,3 +5,9 @@
     server: smtp.gmail.com
     username: !secret smtp_username
     password: !secret smtp_password
+
+  - name: gcm
+    platform: html5
+    gcm_api_key: !secret gcm_server_key
+    gcm_sender_id: !secret gcm_sender_id
+

@@ -1,16 +1,22 @@
   entities:
     - name: pfSense
-      url: http://192.168.1.1/
+      url: https://pfsense.home.hoffmanpm2.com:8443/
       icon: mdi:router-wireless
     - name: Plex
-      url: http://192.168.1.4:32400/web/
+      url: https://ladon.home.hoffmanpm2.com:32400/web/
       icon: mdi:plex
     - name: Wireless AP (Home)
-      url: http://192.168.1.2/
+      url: http://home-wap.home.hoffmanpm2.com/
       icon: mdi:router-wireless
     - name: Wireless AP (Garage)
-      url: http://192.168.1.3/
+      url: http://garage-wap.home.hoffmanpm2.com/
       icon: mdi:router-wireless
     - name: Obi200
-      url: http://192.168.1.6/
+      url: http://obi200.home.hoffmanpm2.com/
       icon: mdi:phone
+    - name: Resilio Sync
+      url: https://ladon.home.hoffmanpm2.com:8888/gui
+      icon: mdi:cloud-sync
+    - name: Full Forecast
+      url: https://www.wunderground.com/weather/us/va/powhatan/KVAPOWHA13?utm_source=HomeCard&utm_content=Button&cm_ven=HomeCardButton
+      icon: mdi:weather-lightning
