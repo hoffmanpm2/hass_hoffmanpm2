@@ -4,11 +4,7 @@
   - alias: 'Away'
     trigger:
       - platform: state
-        entity_id: sensor.away_mode_downstairs
-        from: 'off'
-        to: 'on'
-      - platform: state
-        entity_id: sensor.away_mode_upstairs
+        entity_id: binary_sensor.home_away
         from: 'off'
         to: 'on'
     action:
@@ -18,11 +14,7 @@
   - alias: 'Home'
     trigger:
       - platform: state
-        entity_id: sensor.away_mode_downstairs
-        from: 'on'
-        to: 'off'
-      - platform: state
-        entity_id: sensor.away_mode_downstairs
+        entity_id: binary_sensor.home_away
         from: 'on'
         to: 'off'
     action:
@@ -48,8 +40,9 @@
         - condition: state
           entity_id: input_boolean.onetime_alarm_clock_status
           state: 'on'
-        - condition: template
-          value_template: "{{ is_state('sensor.away_mode_upstairs', 'off') }}"
+        - condition: state
+          entity_id: binary_sensor.home_away
+          state: 'off'
         - condition: or
           conditions:
             - condition: state
@@ -70,8 +63,9 @@
     condition:
       condition: and
       conditions:
-        - condition: template
-          value_template: "{{ is_state('sensor.away_mode_downstairs', 'off') }}"
+        - condition: state
+          entity_id: binary_sensor.home_away
+          state: 'off'
         - condition: state
           entity_id: calendar.vacation
           state: 'off'
@@ -175,8 +169,9 @@
         - condition: state
           entity_id: calendar.vacation
           state: 'off'
-        - condition: template
-          value_template: "{{ is_state('sensor.away_mode_upstairs', 'off') }}"
+        - condition: state
+          entity_id: binary_sensor.home_away
+          state: 'off'
     action:
       service: script.turn_on
       entity_id: script.activate_alarm_clock
@@ -197,14 +192,9 @@
         - condition: state
           entity_id: calendar.vacation
           state: 'off'
-        - condition: or
-          conditions:
-            - condition: state
-              entity_id: sensor.away_mode_downstairs
-              state: 'off'
-            - condition: state
-              entity_id: sensor.away_mode_upstairs
-              state: 'off'
+        - condition: state
+          entity_id: binary_sensor.home_away
+          state: 'off'
     action:
       service: script.turn_on
       entity_id: script.good_morning
@@ -240,7 +230,7 @@
           entity_id: input_boolean.weekend_alarm_clock_status
           state: 'on'
         - condition: state
-          entity_id: sensor.away_mode_upstairs
+          entity_id: binary_sensor.home_away
           state: 'off'
         - condition: or
           conditions:
@@ -262,27 +252,20 @@
       - platform: time
         at: '07:00:00'
     condition:
-      condition: and
+      condition: or
       conditions:
-        - condition: or
-          conditions:
-            - condition: state
-              entity_id: binary_sensor.workday
-              state: 'off'
-            - condition: state
-              entity_id: calendar.day_off
-              state: 'on'
-            - condition: state
-              entity_id: calendar.vacation
-              state: 'on'
-        - condition: or
-          conditions:
-            - condition: state
-              entity_id: sensor.away_mode_downstairs
-              state: 'off'
-            - condition: state
-              entity_id: sensor.away_mode_upstairs
-              state: 'off'
+        - condition: state
+          entity_id: binary_sensor.workday
+          state: 'off'
+        - condition: state
+          entity_id: calendar.day_off
+          state: 'on'
+        - condition: state
+          entity_id: calendar.vacation
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.home_away
+          state: 'off'
     action:
       service: script.turn_on
       entity_id: script.good_morning

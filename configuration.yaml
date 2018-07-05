@@ -11,7 +11,7 @@ homeassistant:
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: America/New_York
   # Customization file
-  customize: !include customize.yaml
+  customize: !include include/customize.yaml
 
 # Show links to resources in log and frontend
 # introduction:
@@ -148,15 +148,15 @@ google:
   client_id: !secret google_apis_client_id
   client_secret: !secret google_apis_client_secret
 
-automation: !include automations.yaml
-binary_sensor: !include binary_sensors.yaml
-camera: !include cameras.yaml
-group: !include groups.yaml
-input_boolean: !include input_booleans.yaml
-input_number: !include input_numbers.yaml
-light: !include lights.yaml
-media_player: !include media_players.yaml
-notify: !include notifications.yaml
-script: !include scripts.yaml
-sensor: !include sensors.yaml
-weblink: !include weblinks.yaml
+automation: !include include/automations.yaml
+binary_sensor: !include include/binary_sensors.yaml
+camera: !include include/cameras.yaml
+group: !include include/groups.yaml
+input_boolean: !include include/input_booleans.yaml
+input_number: !include include/input_numbers.yaml
+light: !include include/lights.yaml
+media_player: !include include/media_players.yaml
+notify: !include include/notifications.yaml
+script: !include include/scripts.yaml
+sensor: !include include/sensors.yaml
+weblink: !include include/weblinks.yaml

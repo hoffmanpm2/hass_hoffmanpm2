@@ -1,0 +1,32 @@
+views:
+  - tab_icon: mdi:home
+    name: Home
+    cards:
+      - type: entities
+        title: Alarm Clocks
+        entities:
+          - input_boolean.weekday_alarm_clock_status
+          - sensor.weekday_alarm_clock_time
+          - input_number.weekday_alarm_clock_hour
+          - input_number.weekday_alarm_clock_minute
+          - input_boolean.weekend_alarm_clock_status
+          - sensor.weekend_alarm_clock_time
+          - input_number.weekend_alarm_clock_hour
+          - input_number.weekend_alarm_clock_minute
+          - input_boolean.onetime_alarm_clock_status
+          - sensor.onetime_alarm_clock_time
+          - input_number.onetime_alarm_clock_hour
+          - input_number.onetime_alarm_clock_minute
+      - type: glance
+        title: Devices
+        entities:
+          - vacuum.neato_downstairs
+          - light.living_room_lamp
+
+  - tab_icon: mdi:sofa
+    name: Downstairs
+    cards:
+      - type: entities
+        title: Living Room
+        entities:
+          - group.living_room

@@ -170,7 +170,7 @@
     view: yes
     icon: mdi:garage
     entities:
-#      - group.hvac_garage
+      - media_player.garage_tv
 
   outdoors: 
     name: Outdoors
