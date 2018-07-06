@@ -2,6 +2,12 @@ views:
   - tab_icon: mdi:home
     name: Home
     cards:
+      - type: weather-forecast
+        entity: weather.yweather
+
+      - type: camera-preview
+        entity: camera.weather_radar
+
       - type: entities
         title: Alarm Clocks
         entities:
@@ -17,16 +23,106 @@ views:
           - sensor.onetime_alarm_clock_time
           - input_number.onetime_alarm_clock_hour
           - input_number.onetime_alarm_clock_minute
+
+      - type: entities
+        title: Heating & Cooling
+        entities:
+          - climate.downstairs
+          - climate.upstairs
+
+      - type: entities
+        title: Water Heater(s)
+        entities:
+          - climate.electric_water_heater
+
+  - tab_icon: mdi:sofa
+    name: Downstairs
+    cards:
+      - type: entities
+        title: Heating & Cooling
+        entities:
+          - climate.downstairs
+
       - type: glance
         title: Devices
         entities:
           - vacuum.neato_downstairs
           - light.living_room_lamp
 
-  - tab_icon: mdi:sofa
-    name: Downstairs
+      - type: camera-preview
+        entity: camera.neato_downstairs_cleaning_map
+
+
+  - tab_icon: mdi:hotel
+    name: Upstairs
     cards:
       - type: entities
-        title: Living Room
+        title: Heating & Cooling
         entities:
-          - group.living_room
+          - climate.upstairs
+
+      - type: glance
+        title: Devices
+        entities:
+          - vacuum.neato_upstairs
+          - light.office_lights
+
+      - type: camera-preview
+        entity: camera.neato_upstairs_cleaning_map
+
+  - tab_icon: mdi:garage
+    name: Garage
+    cards:
+      - type: media-control
+        entity: media_player.garage_tv
+
+  - tab_icon: mdi:pine-tree
+    name: Outdoors
+    cards:
+      - type: glance
+        title: Devices
+        entities:
+          - light.porch_lights
+          - light.driveway_lights
+          - switch.wemo_walkway_lights
+
+      - type: weather-forecast
+        entity: weather.yweather
+
+      - type: camera-preview
+        entity: camera.weather_radar
+
+  - tab_icon: mdi:shield
+    name: Security
+    cards:
+      - type: markdown
+        content: >
+          ## Coming Soon
+
+  - tab_icon: mdi:account-key
+    name: Administrator
+    cards:
+      - type: entities
+        title: Automations
+        entities:
+          - group.all_automations
+
+      - type: entities
+        title: Scripts
+        entities: 
+          - group.all_scripts
+
+      - type: entities
+        title: Links
+        entities:
+          - weblink.pfsense
+          - weblink.wireless_ap_home
+          - weblink.wireless_ap_garage
+          - weblink.plex
+          - weblink.obi200
+          - weblink.resilio_sync
+
+      - type: entities
+        title: Calendars
+        entities:
+          - group.calendar

@@ -159,4 +159,5 @@ media_player: !include include/media_players.yaml
 notify: !include include/notifications.yaml
 script: !include include/scripts.yaml
 sensor: !include include/sensors.yaml
+weather: !include include/weather.yaml
 weblink: !include include/weblinks.yaml

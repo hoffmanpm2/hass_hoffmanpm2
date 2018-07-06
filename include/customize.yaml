@@ -93,8 +93,17 @@
     friendly_name: 'Minute'
     icon: mdi:timer
 
+  light.driveway_lights:
+    friendly_name: Driveway
+
+  light.living_room_lamp:
+    friendly_name: Lamp
+
   light.office_lights:
-    friendly_name: Lights
+    friendly_name: Office
+
+  light.porch_lights:
+    friendly_name: Front Porch
 
   sensor.onetime_alarm_clock_hour:
     hidden: true
@@ -212,12 +221,23 @@
     friendly_name: Temperature
     icon: mdi:thermometer
 
+  sun.sun:
+    hidden: true
+
   switch.neato_downstairs_schedule:
     hidden: true
 
   switch.neato_upstairs_schedule:
     hidden: true
 
-  sun.sun:
-    hidden: true
+  switch.wemo_walkway_lights:
+    friendly_name: Walkway
 
+  vacuum.neato_downstairs:
+    friendly_name: Vacuum
+
+  vacuum.neato_upstairs:
+    friendly_name: Vacuum
+
+  weather.yweather:
+    friendly_name: Weather
