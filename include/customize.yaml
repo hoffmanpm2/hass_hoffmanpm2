@@ -39,6 +39,9 @@
     friendly_name: Working Tomorrow
     hidden: true
 
+  calendar.holidays_in_united_states:
+    friendly_name: Holidays
+
   climate.downstairs:
     hidden: true
 
@@ -232,6 +235,7 @@
 
   switch.wemo_walkway_lights:
     friendly_name: Walkway
+    icon: mdi:lightbulb
 
   vacuum.neato_downstairs:
     friendly_name: Vacuum
@@ -240,4 +244,4 @@
     friendly_name: Vacuum
 
   weather.yweather:
-    friendly_name: Weather
+    friendly_name: Powhatan, VA

@@ -1,9 +1,25 @@
+  - platform: mqtt
+    state_topic: 'owntracks/homeassistant/philip'
+    name: Philip
+
   - platform: template
     sensors:
       away_mode_downstairs:
         value_template: '{{ states.climate.downstairs.attributes.away_mode }}'
       away_mode_upstairs:
         value_template: '{{ states.climate.upstairs.attributes.away_mode }}'
+      day_of_week:
+        value_template: '{{ now().weekday() }}'
+      notifications:
+        value_template: >-
+          ## Notifications
+          
+          {%- if states.binary_sensor.vacuum_downstairs_today.state == 'on' -%}
+          * Neato will vacuum downstairs today at **14:00:00**.
+          {%- endif -%}
+          {%- if states.binary_sensor.vacuum_upstairs_today.state == 'on' -%}
+          * Neato will vacuum upstairs today at **16:00:00**.
+          {%- endif -%}
       onetime_alarm_clock_hour:
         value_template: '{{ states.input_number.onetime_alarm_clock_hour.state | int }}'
       onetime_alarm_clock_minute:
@@ -69,6 +85,7 @@
   - platform: time_date
     display_options:
       - 'time'
+      - 'time_date'
 
   - platform: wunderground
     api_key: ebc22c4ed5812bb9

@@ -1,12 +1,46 @@
-views:
-  - tab_icon: mdi:home
-    name: Home
-    cards:
-      - type: weather-forecast
-        entity: weather.yweather
+resources:
+  - url: /local/cards/ciotlosm/custom-lovelace/alarm_control_panel-card/alarm_control_panel-card.js?v=0.3.1
+    type: js
 
-      - type: camera-preview
-        entity: camera.weather_radar
+views:
+  - icon: mdi:home
+    title: Home
+    id: home
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: entity-filter
+            entities:
+              - sensor.pws_alerts
+            state_filter:
+              - '1'
+              - '2'
+              - '3'
+              - '4'
+            card:
+              type: markdown
+              content: >
+                ## {{ sensor.pws_alerts.attributes.Description }}
+
+                {{ sensor.pws_alerts.attributes.Message }}
+
+                Expires at {{ sensor.pws_alerts.attributes.Expires }}
+            show_empty: false
+
+          - type: weather-forecast
+            entity: weather.yweather
+
+          - type: picture-entity
+            entity: camera.weather_radar
+            show_info: false
+
+      - type: custom:alarm_control_panel-card
+        title: Abode Home Security
+        entity: alarm_control_panel.abode_home_security
+        hide_keypad: false
+        states:
+          - arm_home
+          - arm_away
 
       - type: entities
         title: Alarm Clocks
@@ -23,6 +57,7 @@ views:
           - sensor.onetime_alarm_clock_time
           - input_number.onetime_alarm_clock_hour
           - input_number.onetime_alarm_clock_minute
+        show_header_toggle: false
 
       - type: entities
         title: Heating & Cooling
@@ -33,74 +68,182 @@ views:
       - type: entities
         title: Water Heater(s)
         entities:
-          - climate.electric_water_heater
+          - climate.primary_water_heater
 
-  - tab_icon: mdi:sofa
-    name: Downstairs
+      - type: glance
+        title: Calendar Events
+        entities:
+          - calendar.contacts
+          - calendar.day_off
+          - calendar.holidays_in_united_states
+          - calendar.personal
+          - calendar.vacation
+          - calendar.work
+
+  - icon: mdi:sofa
+    title: Downstairs
+    id: downstairs
     cards:
       - type: entities
         title: Heating & Cooling
         entities:
           - climate.downstairs
 
-      - type: glance
-        title: Devices
+#      - type: picture-glance
+      - type: picture-entity
+        title: Kitchen
+        entity: camera.kitchen
+#        camera_image: camera.kitchen
+#        entities:
+#          - light.
+
+#      - type: picture-glance
+      - type: picture-entity
+        title: Dining
+        entity: camera.dining
+#        camera_image: camera.dining
+#        entities:
+#          - light.
+
+#      - type: picture-glance
+      - type: picture-entity
+        title: Foyer
+        entity: camera.foyer
+#        camera_image: camera.foyer
+#        entities:
+#          - light.
+
+#      - type: picture-glance
+#        title: Utility
+#        camera_image: camera.utility
+#        entities:
+#          - light.
+
+#      - type: picture-glance
+#        title: Garage
+#        camera_image: camera.garage
+#        entities:
+#          - light.
+
+      - type: picture-glance
+        title: Living Room
+        camera_image: camera.living_room
         entities:
-          - vacuum.neato_downstairs
           - light.living_room_lamp
 
-      - type: camera-preview
-        entity: camera.neato_downstairs_cleaning_map
+      - type: picture-glance
+        title: Neato
+        camera_image: camera.neato_downstairs_cleaning_map
+        entities:
+          - vacuum.neato_downstairs
 
-
-  - tab_icon: mdi:hotel
-    name: Upstairs
+  - icon: mdi:hotel
+    title: Upstairs
+    id: upstairs
     cards:
       - type: entities
         title: Heating & Cooling
         entities:
           - climate.upstairs
 
-      - type: glance
-        title: Devices
+#      - type: picture-glance
+      - type: picture-entity
+        title: Master Bedroom
+        entity: camera.master_bedroom
+#        camera_image: camera.master_bedroom
+#        entities:
+#          - light.
+
+#      - type: picture-glance
+      - type: picture-entity
+        title: Master Bathroom
+        entity: camera.master_bathroom
+#        camera_image: camera.master_bathroom
+#        entities:
+#          - light.
+
+#      - type: picture-glance
+      - type: picture-entity
+        title: Guest Bathroom
+        entity: camera.guest_bathroom
+#        camera_image: camera.guest_bathroom
+#        entities:
+#          - light.
+
+#      - type: picture-glance
+      - type: picture-entity
+        title: Guest Bedroom
+        entity: camera.guest_bedroom1
+#        camera_image: camera.guest_bedroom1
+#        entities:
+#          - light.
+
+#      - type: picture-glance
+#        title: Guest Bedroom
+#        camera_image: camera.guest_bedroom2
+#        entities:
+#          - light.
+
+      - type: picture-glance
+        title: Office
+        camera_image: camera.office
         entities:
-          - vacuum.neato_upstairs
           - light.office_lights
 
-      - type: camera-preview
-        entity: camera.neato_upstairs_cleaning_map
+      - type: picture-glance
+        title: Neato
+        camera_image: camera.neato_upstairs_cleaning_map
+        entities:
+          - vacuum.neato_upstairs
 
-  - tab_icon: mdi:garage
-    name: Garage
+  - icon: mdi:garage
+    title: Garage
+    id: garage
     cards:
       - type: media-control
         entity: media_player.garage_tv
 
-  - tab_icon: mdi:pine-tree
-    name: Outdoors
+  - icon: mdi:pine-tree
+    title: Outdoors
+    id: outdoors
     cards:
-      - type: glance
-        title: Devices
+      - type: picture-glance
+        title: Front Porch
+        camera_image: camera.front_porch
         entities:
           - light.porch_lights
-          - light.driveway_lights
+
+      - type: picture-glance
+        title: Walkway
+        camera_image: camera.walkway
+        entities:
           - switch.wemo_walkway_lights
+
+      - type: picture-glance
+        title: Driveway
+        camera_image: camera.driveway
+        entities:
+          - light.driveway_lights
 
       - type: weather-forecast
         entity: weather.yweather
 
-      - type: camera-preview
+      - type: picture-entity
         entity: camera.weather_radar
+        show_info: false
 
-  - tab_icon: mdi:shield
-    name: Security
+  - icon: mdi:shield
+    title: Security
+    id: security
     cards:
-      - type: markdown
-        content: >
-          ## Coming Soon
+      - type: entities
+        title: Abode Home Security
+        entities:
+          - alarm_control_panel.abode_home_security
 
-  - tab_icon: mdi:account-key
-    name: Administrator
+  - icon: mdi:account-key
+    title: Administration
+    id: administration
     cards:
       - type: entities
         title: Automations

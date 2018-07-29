@@ -4,14 +4,14 @@
       - alias: Set Volume Level for Alarm
         service: media_player.volume_set
         data:
-          entity_id: media_player.master_bedroom_speaker
+          entity_id: media_player.philips_speaker
           volume_level: '0.4'
       - delay:
           seconds: 2
       - alias: Play Alarm MP3 from Website
         service: media_player.play_media
         data:
-          entity_id: media_player.master_bedroom_speaker
+          entity_id: media_player.philips_speaker
           media_content_id: 'https://static1.squarespace.com/static/542f4b8ae4b0fe7f8b6c08c5/5a368f0e24a6949ae3f0542d/5a3690cd24a6949ae3f08199/1513525484069/IOS+10+-+Early+Riser+Alarm+%28Enhanced++Extended+Edition%29.mp3'
           media_content_type: 'MUSIC'
 
@@ -42,14 +42,14 @@
       - alias: Set Volume Level for Alarm
         service: media_player.volume_set
         data:
-          entity_id: media_player.master_bedroom_speaker
+          entity_id: media_player.philips_speaker
           volume_level: '0.4'
       - delay:
           seconds: 2
       - alias: Play Alarm MP3 from Website
         service: media_player.play_media
         data:
-          entity_id: media_player.master_bedroom_speaker
+          entity_id: media_player.philips_speaker
           media_content_id: 'https://static1.squarespace.com/static/542f4b8ae4b0fe7f8b6c08c5/5a368f0e24a6949ae3f0542d/5a3690cd24a6949ae3f08199/1513525484069/IOS+10+-+Early+Riser+Alarm+%28Enhanced++Extended+Edition%29.mp3'
           media_content_type: 'MUSIC'
 
@@ -144,3 +144,76 @@
           entity_id: climate.upstairs
           target_temp_high: '70'
           target_temp_low: '65'
+
+  play_emergency_tone:
+    alias: Play Emergency Tone
+    sequence:
+      - alias: Play Emergency Tone
+        service: media_player.play_media
+        data:
+          entity_id: media_player.home_speakers
+          media_content_id: "https://www.dropbox.com/s/qowv8cof520zrzl/emergency_alert.mp3?dl=1"
+          media_content_type: "music"
+      # Sleep for 0.5s following tone
+      - delay:
+          milliseconds: 3250
+      - alias: Play Emergency Tone
+        service: media_player.play_media
+        data:
+          entity_id: media_player.home_speakers
+          media_content_id: "https://www.dropbox.com/s/qowv8cof520zrzl/emergency_alert.mp3?dl=1"
+          media_content_type: "music"
+      # Sleep for 0.5s following tone
+      - delay:
+          milliseconds: 3250
+      - alias: Play Emergency Tone
+        service: media_player.play_media
+        data:
+          entity_id: media_player.home_speakers
+          media_content_id: "https://www.dropbox.com/s/qowv8cof520zrzl/emergency_alert.mp3?dl=1"
+          media_content_type: "music"
+      - delay:
+          milliseconds: 3250
+
+  test_tts_google_home:
+    sequence:
+      - service: tts.google_say
+        entity_id: media_player.office_speaker
+        data:
+          message: 'This is a voice test for Google Home.'
+
+  weather_alert_psa:
+    alias: Weather Alert PSA
+    sequence:
+      - alias: Activate Home Speakers
+        service: media_player.turn_on
+        data:
+          entity_id: media_player.home_speakers
+      - alias: Adjust Volume Level for Home Speakers
+        service: media_player.volume_set
+        data:
+          entity_id: media_player.home_speakers
+          volume_level: 0.6
+
+      # Block to allow tasks above to complete
+      - delay:
+          milliseconds: 500
+
+      - alias: Play Emergency Tone
+        service: script.turn_on
+        entity_id: script.play_emergency_tone
+
+      # Task above seems to operate asynchronously. Block until completed.
+      - delay:
+          milliseconds: 10250
+
+      - alias: Play Alert Text
+        service: tts.google_say
+        entity_id: media_player.home_speakers
+        data:
+          message: '{{ sensor.pws_alerts.attributes.Message }}'
+      - alias: Reset Volume Level
+        service: media_player.volume_set
+        data:
+          entity_id: media_player.home_speakers
+          volume_level: 0.4

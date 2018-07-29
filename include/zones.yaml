@@ -1,0 +1,29 @@
+  - name: Home
+    latitude: !secret lat
+    longitude: !secret long
+    radius: 50
+    icon: mdi:home    
+
+  - name: Work
+    latitude: !secret work_lat
+    longitude: !secret work_long
+    radius: 250
+    icon: mdi:briefcase
+
+  - name: Work [KG]
+    latitude: !secret kg_lat
+    longitude: !secret kg_long
+    radius: 250
+    icon: mdi:briefcase
+
+  - name: Parents
+    latitude: !secret hoffmans_lat
+    longitude: !secret hoffmans_long
+    radius: 250
+    icon: mdi:human-male-female
+
+  - name: Mom's
+    latitude: !secret moms_lat
+    longitude: !secret moms_long
+    radius: 250
+    icon: mdi:human-female

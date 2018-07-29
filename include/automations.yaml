@@ -28,7 +28,7 @@
     action:
       service: frontend.set_theme
       data:
-        name: PmxMononight
+        name: dark_theme
 
   - alias: 'One-Time Alarm Clock'
     trigger:
@@ -107,8 +107,8 @@
           entity_id: calendar.vacation
           state: 'off'
     action:
-      service: ifttt.trigger
-      data: { "event": "VacuumDownstairs" }
+      service: vacuum.turn_on
+      entity_id: vacuum.neato_downstairs
 
   - alias: 'Vacuum Upstairs'
     trigger:
@@ -126,29 +126,33 @@
           entity_id: calendar.vacation
           state: 'off'
     action:
-      service: ifttt.trigger
-      data: { "event": "VacuumUpstairs" }
+      service: vacuum.turn_on
+      entity_id: vacuum.neato_upstairs
 
-#  - alias: 'Weather Alert'
-#    trigger:
-#      - platform: numeric_state
-#        entity_id: sensor.pws_alerts
-#        above: 0
-#    condition:
-#      condition: or
-#      conditions:
-#        - condition: template
-#          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description', 'Tornado Warning') }}"
-#        - condition: template
-#          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description', 'Severe Thunderstorm Warning') }}"
-#        - condition: template
-#          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description', 'Winter Storm Warning') }}"
-#        - condition: template
-#          value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description', 'Winter Weather Advisory') }}"
-#    action:
-#      service: notify.gcm
-#      data:
-#        message: 'The National Weather Service has issued a {{ sensor.pws_alerts.attributes.Description }} for your area.'
+  - alias: 'Weather Alert'
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.pws_alerts
+        above: 0
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.home_away
+          state: 'off'
+        - condition: or
+          conditions:
+            - condition: template
+              value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description', 'Tornado Warning') }}"
+            - condition: template
+              value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description', 'Severe Thunderstorm Warning') }}"
+            - condition: template
+              value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description', 'Winter Storm Warning') }}"
+            - condition: template
+              value_template: "{{ is_state_attr('sensor.pws_alerts', 'Description', 'Winter Weather Advisory') }}"
+    action:
+      service: script.turn_on
+      entity_id: script.weather_alert_psa
 
   - alias: 'Weekday Alarm Clock'
     trigger:

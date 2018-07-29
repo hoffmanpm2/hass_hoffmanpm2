@@ -6,3 +6,12 @@
   - platform: workday
     name: workday
     country: US    
+
+  - platform: template
+    sensors:
+      display_notifications:
+        value_template: "{{ states('binary_sensor.vacuum_downstairs_today') == 'on' or states('binary_sensor.vacuum_upstairs_today') == 'on' }}"
+      vacuum_downstairs_today:
+        value_template: "{{ states('sensor.day_of_week') | int % 2 == 1 and states('automation.vacuum_downstairs') == 'on' }}"
+      vacuum_upstairs_today:
+        value_template: "{{ states('sensor.day_of_week') | int % 2 == 1 and states('automation.vacuum_upstairs') == 'on' }}"

@@ -1,5 +1,6 @@
 *
 !include
+!media
 !scenes
 !*.yaml
 !.gitignore

@@ -2,3 +2,55 @@
     name: Weather Radar
     still_image_url: https://icons.wxug.com/data/weather-maps/radar/united-states/staunton-virginia-region-current-radar-animation.gif
 
+  - platform: local_file
+    name: Living Room
+    file_path: /home/homeassistant/.homeassistant/images/living_room.jpg
+
+  - platform: local_file
+    name: Office
+    file_path: /home/homeassistant/.homeassistant/images/office.jpg
+
+  - platform: local_file
+    name: Foyer
+    file_path: /home/homeassistant/.homeassistant/images/foyer.jpg
+
+  - platform: local_file
+    name: Dining
+    file_path: /home/homeassistant/.homeassistant/images/dining.jpg
+
+  - platform: local_file
+    name: Powder Room
+    file_path: /home/homeassistant/.homeassistant/images/powder_room.jpg
+
+  - platform: local_file
+    name: Kitchen
+    file_path: /home/homeassistant/.homeassistant/images/kitchen.jpg
+
+  - platform: local_file
+    name: Master Bedroom
+    file_path: /home/homeassistant/.homeassistant/images/master_bedroom.jpg
+
+  - platform: local_file
+    name: Master Bathroom
+    file_path: /home/homeassistant/.homeassistant/images/master_bathroom.jpg
+
+  - platform: local_file
+    name: Guest Bathroom
+    file_path: /home/homeassistant/.homeassistant/images/guest_bathroom.jpg
+
+  - platform: local_file
+    name: Guest Bedroom1
+    file_path: /home/homeassistant/.homeassistant/images/guest_bedroom1.jpg
+
+  - platform: local_file
+    name: Front Porch
+    file_path: /home/homeassistant/.homeassistant/images/front_porch.jpg
+
+  - platform: local_file
+    name: Driveway
+    file_path: /home/homeassistant/.homeassistant/images/driveway.jpg
+
+  - platform: local_file
+    name: Walkway
+    file_path: /home/homeassistant/.homeassistant/images/walkway.jpg
+    
