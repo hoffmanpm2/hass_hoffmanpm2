@@ -8,6 +8,12 @@
         value_template: '{{ states.climate.downstairs.attributes.away_mode }}'
       away_mode_upstairs:
         value_template: '{{ states.climate.upstairs.attributes.away_mode }}'
+      battery_abode_keyfob:
+        value_template: '{{ states.binary_sensor.keyfob.attributes.battery_low }}'
+      battery_abode_keypad_alpha:
+        value_template: '{{ states.binary_sensor.keypad_alpha.attributes.battery_low }}'
+      battery_abode_keypad_bravo:
+        value_template: '{{ states.binary_sensor.keypad_bravo.attributes.battery_low }}'
       day_of_week:
         value_template: '{{ now().weekday() }}'
       notifications:

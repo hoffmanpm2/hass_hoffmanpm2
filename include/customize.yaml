@@ -108,6 +108,18 @@
   light.porch_lights:
     friendly_name: Front Porch
 
+  sensor.battery_abode_keyfob:
+    friendly_name: Keyfob
+    icon: mdi:battery-10
+
+  sensor.battery_abode_keypad_alpha:
+    friendly_name: Keypad Alpha
+    icon: mdi:battery-10
+
+  sensor.battery_abode_keypad_bravo:
+    friendly_name: Keypad Bravo
+    icon: mdi:battery-10
+
   sensor.onetime_alarm_clock_hour:
     hidden: true
 

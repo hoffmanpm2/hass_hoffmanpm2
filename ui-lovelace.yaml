@@ -34,6 +34,18 @@ views:
             entity: camera.weather_radar
             show_info: false
 
+      - type: entity-filter
+        entities:
+          - sensor.battery_abode_keyfob
+          - sensor.battery_abode_keypad_alpha
+          - sensor.battery_abode_keypad_bravo
+        state_filter:
+          - 'True'
+        card:
+          type: glance
+          title: Low Battery Alert
+        show_empty: false
+
       - type: custom:alarm_control_panel-card
         title: Abode Home Security
         entity: alarm_control_panel.abode_home_security
@@ -236,6 +248,18 @@ views:
     title: Security
     id: security
     cards:
+      - type: entity-filter
+        entities:
+          - sensor.battery_abode_keyfob
+          - sensor.battery_abode_keypad_alpha
+          - sensor.battery_abode_keypad_bravo
+        state_filter:
+          - 'True'
+        card:
+          type: glance
+          title: Low Battery Alert
+        show_empty: false
+
       - type: entities
         title: Abode Home Security
         entities:
