@@ -3,7 +3,7 @@
       url: https://pfsense.home.hoffmanpm2.com:8443/
       icon: mdi:router-wireless
     - name: Plex
-      url: https://ladon.home.hoffmanpm2.com:32400/web/
+      url: https://typhon.home.hoffmanpm2.com:32400/web/
       icon: mdi:plex
     - name: Wireless AP (Home)
       url: http://home-wap.home.hoffmanpm2.com/

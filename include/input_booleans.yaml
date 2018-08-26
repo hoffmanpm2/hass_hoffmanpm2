@@ -5,5 +5,5 @@
     initial: on
 
   weekend_alarm_clock_status:
-    initial: on
+    initial: off
     

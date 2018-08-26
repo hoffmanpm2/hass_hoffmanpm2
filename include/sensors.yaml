@@ -1,19 +1,300 @@
-  - platform: mqtt
-    state_topic: 'owntracks/homeassistant/philip'
-    name: Philip
-
   - platform: template
     sensors:
+      # Translation of On/Off/Null to Open/Closed/Offline
+      abode_sensor_dining_room_window_left:
+        value_template: >-
+          {%- if state_attr('binary_sensor.dining_room_window_left', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.dining_room_window_left.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.dining_room_window_left.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_dining_room_window_right:
+        value_template: >-
+          {%- if state_attr('binary_sensor.dining_room_window_right', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.dining_room_window_right.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.dining_room_window_right.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_front_door:
+        value_template: >-
+          {%- if state_attr('binary_sensor.front_door', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.front_door.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.front_door.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_garage_door:
+        value_template: >-
+          {%- if state_attr('binary_sensor.garage_door', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.garage_door.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.garage_door.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_garage_entry_door:
+        value_template: >-
+          {%- if state_attr('binary_sensor.garage_entry_door', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.garage_entry_door.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.garage_entry_door.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_garage_window_left:
+        value_template: >-
+          {%- if state_attr('binary_sensor.garage_window_left', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.garage_window_left.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.garage_window_left.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_garage_window_right:
+        value_template: >-
+          {%- if state_attr('binary_sensor.garage_window_right', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.garage_window_right.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.garage_window_right.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_guest_bedroom_window:
+        value_template: >-
+          {%- if state_attr('binary_sensor.guest_bedroom_window', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.guest_bedroom_window.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.guest_bedroom_window.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_home_gym_window:
+        value_template: >-
+          {%- if state_attr('binary_sensor.home_gym_window', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.home_gym_window.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.home_gym_window.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_home_office_window_left:
+        value_template: >-
+          {%- if state_attr('binary_sensor.home_office_window_left', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.home_office_window_left.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.home_office_window_left.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_home_office_window_right:
+        value_template: >-
+          {%- if state_attr('binary_sensor.home_office_window_right', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.home_office_window_right.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.home_office_window_right.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_keypad_foyer:
+        value_template: >-
+          {%- if state_attr('binary_sensor.keypad_foyer', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.keypad_foyer.state == 'on' -%}
+            Online
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_keypad_garage:
+        value_template: >-
+          {%- if state_attr('binary_sensor.keypad_garage', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.keypad_garage.state == 'on' -%}
+            Online
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_kitchen_window:
+        value_template: >-
+          {%- if state_attr('binary_sensor.kitchen_window', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.kitchen_window.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.kitchen_window.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_living_room_glass_break:
+        value_template: >-
+          {%- if state_attr('binary_sensor.living_room_glass_break', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.living_room_glass_break.state == 'on' -%}
+            Online
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_living_room_window_left:
+        value_template: >-
+          {%- if state_attr('binary_sensor.living_room_window_left', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.living_room_window_left.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.living_room_window_left.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_living_room_window_right:
+        value_template: >-
+          {%- if state_attr('binary_sensor.living_room_window_right', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.living_room_window_right.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.living_room_window_right.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_master_backyard_window:
+        value_template: >-
+          {%- if state_attr('binary_sensor.master_backyard_window', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.master_backyard_window.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.master_backyard_window.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_master_bath_window_left:
+        value_template: >-
+          {%- if state_attr('binary_sensor.master_bath_window_left', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.master_bath_window_left.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.master_bath_window_left.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_master_bath_window_right:
+        value_template: >-
+          {%- if state_attr('binary_sensor.master_bath_window_right', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.master_bath_window_right.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.master_bath_window_right.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_master_driveway_window_left:
+        value_template: >-
+          {%- if state_attr('binary_sensor.master_driveway_window_left', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.master_driveway_window_left.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.master_driveway_window_left.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_master_driveway_window_right:
+        value_template: >-
+          {%- if state_attr('binary_sensor.master_driveway_window_right', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.master_driveway_window_right.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.master_driveway_window_right.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_patio_door:
+        value_template: >-
+          {%- if state_attr('binary_sensor.patio_door', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.patio_door.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.patio_door.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_patio_window_left:
+        value_template: >-
+          {%- if state_attr('binary_sensor.patio_window_left', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.patio_window_left.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.patio_window_left.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_patio_window_right:
+        value_template: >-
+          {%- if state_attr('binary_sensor.patio_window_right', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.patio_window_right.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.patio_window_right.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_siren_downstairs:
+        value_template: >-
+          {%- if state_attr('binary_sensor.siren_downstairs', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.siren_downstairs.state == 'on' -%}
+            Online
+          {%- else -%}
+            Offline
+          {%- endif -%}
+      abode_sensor_stairs_window:
+        value_template: >-
+          {%- if state_attr('binary_sensor.stairs_window', 'battery_low') -%}
+            Low Battery
+          {%- elif states.binary_sensor.stairs_window.state == 'on' -%}
+            Open
+          {%- elif states.binary_sensor.stairs_window.state == 'off' -%}
+            Closed
+          {%- else -%}
+            Offline
+          {%- endif -%}
+
       away_mode_downstairs:
         value_template: '{{ states.climate.downstairs.attributes.away_mode }}'
       away_mode_upstairs:
         value_template: '{{ states.climate.upstairs.attributes.away_mode }}'
-      battery_abode_keyfob:
-        value_template: '{{ states.binary_sensor.keyfob.attributes.battery_low }}'
-      battery_abode_keypad_alpha:
-        value_template: '{{ states.binary_sensor.keypad_alpha.attributes.battery_low }}'
-      battery_abode_keypad_bravo:
-        value_template: '{{ states.binary_sensor.keypad_bravo.attributes.battery_low }}'
       day_of_week:
         value_template: '{{ now().weekday() }}'
       notifications:

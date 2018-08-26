@@ -108,17 +108,201 @@
   light.porch_lights:
     friendly_name: Front Porch
 
-  sensor.battery_abode_keyfob:
+  sensor.abode_battery_dining_room_window_left:
+    friendly_name: Dining Window (Left)
+    icon: mdi:battery-10
+
+  sensor.abode_battery_dining_room_window_right:
+    friendly_name: Dining Window (Right)
+    icon: mdi:battery-10
+
+  sensor.abode_battery_front_door:
+    friendly_name: Front Door
+    icon: mdi:battery-10
+
+  sensor.abode_battery_garage_door:
+    friendly_name: Garage Door
+    icon: mdi:battery-10
+
+  sensor.abode_battery_garage_entry_door:
+    friendly_name: Garage Entry Door
+    icon: mdi:battery-10
+
+  sensor.abode_battery_garage_window_left:
+    friendly_name: Garage Window (Left)
+    icon: mdi:battery-10
+
+  sensor.abode_battery_garage_window_right:
+    friendly_name: Garage Window (Right)
+    icon: mdi:battery-10
+
+  sensor.abode_battery_keyfob:
     friendly_name: Keyfob
     icon: mdi:battery-10
 
-  sensor.battery_abode_keypad_alpha:
-    friendly_name: Keypad Alpha
+  sensor.abode_battery_keypad_foyer:
+    friendly_name: Keypad (Foyer)
     icon: mdi:battery-10
 
-  sensor.battery_abode_keypad_bravo:
-    friendly_name: Keypad Bravo
+  sensor.abode_battery_keypad_garage:
+    friendly_name: Keypad (Garage)
     icon: mdi:battery-10
+
+  sensor.abode_batter_kitchen_window:
+    friendly_name: Kitchen Window
+    icon: mdi:battery-10
+
+  sensor.abode_battery_living_room_window_left:
+    friendly_name: Living Room Window (Left)
+    icon: mdi:battery-10
+
+  sensor.abode_battery_living_room_window_right:
+    friendly_name: Living Room Window (Right)
+    icon: mdi:battery-10
+
+  sensor.abode_battery_patio_door:
+    friendly_name: Patio Door
+    icon: mdi:battery-10
+
+  sensor.abode_battery_patio_window_left:
+    friendly_name: Patio Window (Left)
+    icon: mdi:battery-10
+
+  sensor.abode_battery_patio_window_right:
+    friendly_name: Patio Window (Right)
+    icon: mdi:battery-10
+
+  sensor.abode_battery_stairs_window:
+    friendly_name: Stairs Window
+    icon: mdi:battery-10
+
+  sensor.abode_battery_guest_bedroom_window:
+    friendly_name: Guest Bedroom Window
+    icon: mdi:battery-10
+
+  sensor.abode_battery_home_gym_window:
+    friendly_name: Home Gym Window
+    icon: mdi:battery-10
+
+  sensor.abode_battery_master_backyard_window:
+    friendly_name: Backyard Window
+    icon: mdi:battery-10
+
+  sensor.abode_battery_master_driveway_window_left:
+    friendly_name: Driveway Window (Left)
+    icon: mdi:battery-10
+
+  sensor.abode_battery_master_driveway_window_right:
+    friendly_name: Driveway Window (Right)
+    icon: mdi:battery-10
+
+  sensor.abode_battery_master_bath_window_left:
+    friendly_name: Master Bath Window (Left)
+    icon: mdi:battery-10
+
+  sensor.abode_battery_master_bath_window_right:
+    friendly_name: Master Bath Window (Right)
+    icon: mdi:battery-10
+
+  sensor.abode_battery_home_office_window_left:
+    friendly_name: Home Office Window (Left)
+    icon: mdi:battery-10
+
+  sensor.abode_battery_home_office_window_right:
+    friendly_name: Home Office Window (Right)
+    icon: mdi:battery-10
+
+  sensor.abode_sensor_dining_room_window_left:
+    friendly_name: Dining (Left)
+    icon: mdi:window-closed
+
+  sensor.abode_sensor_dining_room_window_right:
+    friendly_name: Dining (Right)
+    icon: mdi:window-closed
+
+  sensor.abode_sensor_front_door:
+    friendly_name: Front Door
+    icon: mdi:door-closed
+
+  sensor.abode_sensor_garage_door:
+    friendly_name: Garage Door
+    icon: mdi:garage
+
+  sensor.abode_sensor_garage_entry_door:
+    friendly_name: Garage Entry Door
+    icon: mdi:door-closed
+
+  sensor.abode_sensor_garage_window_left:
+    friendly_name: Garage (Left)
+    icon: mdi:window-closed
+
+  sensor.abode_sensor_garage_window_right:
+    friendly_name: Garage (Right)
+    icon: mdi:window-closed
+
+  sensor.abode_sensor_kitchen_window:
+    friendly_name: Kitchen
+    icon: mdi:window-closed
+
+  sensor.abode_sensor_living_room_window_left:
+    friendly_name: Living Room (Left)
+    icon: mdi:window-closed
+
+  sensor.abode_sensor_living_room_window_right:
+    friendly_name: Living Room (Right)
+    icon: mdi:window-closed
+
+  sensor.abode_sensor_patio_door:
+    friendly_name: Patio Door
+    icon: mdi:door-closed
+
+  sensor.abode_sensor_patio_window_left:
+    friendly_name: Patio (Left)
+    icon: mdi:window-closed
+
+  sensor.abode_sensor_patio_window_right:
+    friendly_name: Patio (Right)
+    icon: mdi:window-closed
+
+  sensor.abode_sensor_stairs_window:
+    friendly_name: Stairs
+    icon: mdi:window-closed
+
+  sensor.abode_sensor_guest_bedroom_window:
+    friendly_name: Guest Bedroom
+    icon: mdi:window-closed
+
+  sensor.abode_sensor_home_gym_window:
+    friendly_name: Home Gym
+    icon: mdi:window-closed
+
+  sensor.abode_sensor_master_backyard_window:
+    friendly_name: Backyard
+    icon: mdi:window-closed
+
+  sensor.abode_sensor_master_driveway_window_left:
+    friendly_name: Driveway (Left)
+    icon: mdi:window-closed
+
+  sensor.abode_sensor_master_driveway_window_right:
+    friendly_name: Driveway (Right)
+    icon: mdi:window-closed
+
+  sensor.abode_sensor_master_bath_window_left:
+    friendly_name: Master Bath (Left)
+    icon: mdi:window-closed
+
+  sensor.abode_sensor_master_bath_window_right:
+    friendly_name: Master Bath (Right)
+    icon: mdi:window-closed
+
+  sensor.abode_sensor_home_office_window_left:
+    friendly_name: Home Office (Left)
+    icon: mdi:window-closed
+
+  sensor.abode_sensor_home_office_window_right:
+    friendly_name: Home Office (Right)
+    icon: mdi:window-closed
 
   sensor.onetime_alarm_clock_hour:
     hidden: true

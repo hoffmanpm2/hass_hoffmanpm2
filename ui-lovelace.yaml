@@ -34,18 +34,6 @@ views:
             entity: camera.weather_radar
             show_info: false
 
-      - type: entity-filter
-        entities:
-          - sensor.battery_abode_keyfob
-          - sensor.battery_abode_keypad_alpha
-          - sensor.battery_abode_keypad_bravo
-        state_filter:
-          - 'True'
-        card:
-          type: glance
-          title: Low Battery Alert
-        show_empty: false
-
       - type: custom:alarm_control_panel-card
         title: Abode Home Security
         entity: alarm_control_panel.abode_home_security
@@ -53,6 +41,15 @@ views:
         states:
           - arm_home
           - arm_away
+
+      - type: markdown
+        title: Local Phone Numbers
+        content: >
+          **Sheriff's Office**: [(804) 598-5656](tel:8045985656)
+
+          **Fire & Rescue**: [(804) 598-5646](tel:8045985646)
+
+          **Animal Control**: [(804) 598-5672](tel:8045985672)
 
       - type: entities
         title: Alarm Clocks
@@ -248,22 +245,86 @@ views:
     title: Security
     id: security
     cards:
+      - type: custom:alarm_control_panel-card
+        title: Abode Home Security
+        entity: alarm_control_panel.abode_home_security
+        hide_keypad: false
+        states:
+          - arm_home
+          - arm_away
+
       - type: entity-filter
         entities:
-          - sensor.battery_abode_keyfob
-          - sensor.battery_abode_keypad_alpha
-          - sensor.battery_abode_keypad_bravo
+          - sensor.abode_sensor_dining_room_window_left
+          - sensor.abode_sensor_dining_room_window_right
+          - sensor.abode_sensor_front_door
+          - sensor.abode_sensor_garage_door
+          - sensor.abode_sensor_garage_entry_door
+          - sensor.abode_sensor_garage_window_left
+          - sensor.abode_sensor_garage_window_right
+          - sensor.abode_sensor_guest_bedroom_window
+          - sensor.abode_sensor_home_gym_window
+          - sensor.abode_sensor_home_office_window_left
+          - sensor.abode_sensor_home_office_window_right
+          - sensor.abode_sensor_keypad_foyer
+          - sensor.abode_sensor_keypad_garage
+          - sensor.abode_sensor_kitchen_window
+          - sensor.abode_sensor_living_room_glass_break
+          - sensor.abode_sensor_living_room_window_left
+          - sensor.abode_sensor_living_room_window_right
+          - sensor.abode_sensor_master_backyard_window
+          - sensor.abode_sensor_master_bath_window_left
+          - sensor.abode_sensor_master_bath_window_right
+          - sensor.abode_sensor_master_driveway_window_left
+          - sensor.abode_sensor_master_driveway_window_right
+          - sensor.abode_sensor_patio_door
+          - sensor.abode_sensor_patio_window_left
+          - sensor.abode_sensor_patio_window_right
+          - sensor.abode_sensor_siren_downstairs
+          - sensor.abode_sensor_stairs_window
         state_filter:
-          - 'True'
+          - 'Low Battery'
+          - 'Open'
+          - 'Offline'
         card:
           type: glance
-          title: Low Battery Alert
+          title: Security Vulnerabilities
         show_empty: false
 
-      - type: entities
-        title: Abode Home Security
+      - type: glance
+        title: Entry Doors
         entities:
-          - alarm_control_panel.abode_home_security
+          - sensor.abode_sensor_front_door
+          - sensor.abode_sensor_garage_door
+          - sensor.abode_sensor_garage_entry_door
+          - sensor.abode_sensor_patio_door
+
+      - type: glance
+        title: Windows (Downstairs)
+        entities:
+          - sensor.abode_sensor_dining_room_window_left
+          - sensor.abode_sensor_dining_room_window_right
+          - sensor.abode_sensor_garage_window_left
+          - sensor.abode_sensor_garage_window_right
+          - sensor.abode_sensor_kitchen_window
+          - sensor.abode_sensor_living_room_window_left
+          - sensor.abode_sensor_living_room_window_right
+          - sensor.abode_sensor_patio_window_left
+          - sensor.abode_sensor_patio_window_right
+          - sensor.abode_sensor_stairs_window
+
+      - type: glance
+        title: Windows (Upstairs)
+        entities:
+          - sensor.abode_sensor_guest_bedroom_window
+          - sensor.abode_sensor_home_gym_window
+          - sensor.abode_sensor_master_backyard_window
+          - sensor.abode_sensor_master_driveway_window_left
+          - sensor.abode_sensor_master_driveway_window_right
+          - sensor.abode_sensor_master_bath_window_left
+          - sensor.abode_sensor_master_bath_window_right
+          - sensor.abode_sensor_home_office_window_left
+          - sensor.abode_sensor_home_office_window_right
 
   - icon: mdi:account-key
     title: Administration
